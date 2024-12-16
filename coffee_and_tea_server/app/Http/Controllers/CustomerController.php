@@ -1,0 +1,133 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Customers;
+use App\Models\History;
+use App\Valid\AuthValid;
+
+class CustomerController extends Controller
+{
+
+    public function getAllCus()
+    {
+        $data = Customers::all();
+        return response()->json(['data' => $data]);
+    }
+
+
+    public function getAllHistory()
+    {
+        $data = History::all();
+        return response()->json($data);
+    }
+
+
+    public function updateCus(Request $request)
+    {
+        $authValid = new AuthValid();
+
+        $customer = Customers::find($request->input('id'));
+
+        if (!$customer) {
+            return response()->json([
+                'message' => 'Khách hàng không tồn tại'
+            ], 404);
+        }
+
+        if ($authValid->emailExists($request->input('email'))) {
+            return response()->json([
+                'message' => 'Email đã tồn tại trong hệ thống'
+            ], 400);
+        }
+
+        try {
+            $customer->name = $request->input('name');
+            $customer->gender = $request->input('gender');
+            $customer->phone = $request->input('phone');
+            $customer->email = $request->input('email');
+            $customer->birth_date = $request->input('birth_date');
+            $customer->address = $request->input('address');
+            $customer->balance = $request->input('balance');
+
+            $customer->save();
+
+            return response()->json([
+                'message' => 'Cập nhật khách hàng thành công',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Có lỗi xảy ra: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function updateAvatarCus(Request $request) {
+        try {
+            $customer = Customers::where('id', $request->input('id'))->first();
+            $file = $request->file('file');
+
+            if (!$customer || !$file) {
+                return response()->json([
+                    'message' => 'Dữ liệu rỗng'
+                ], 200);
+            }
+
+            // Tạo tên file mới
+            $file_name = $customer->id . '_' . $request->input('time') . '.' . $file->getClientOriginalExtension();
+
+            // Tạo instance của Intervention Image
+            $storage_path = public_path('storage/customers');
+
+            if (!file_exists($storage_path)) {
+                mkdir($storage_path, 0777, true);
+            }
+            if ($customer->image && file_exists(public_path('storage/customers/' . $customer->image))) {
+                unlink(public_path('storage/customers/' . $customer->image));
+            }
+            $file->move($storage_path, $file_name);
+
+            $customer->image = $file_name;
+            $customer->save();
+
+             return response()->json([
+                'message' => 'Cập nhật thành công'
+            ], 200);
+         } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Lỗi: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getCustomerById(Request $request) {
+        try {
+            $customer = Customers::where('id', $request->input('id'))->first();
+            return response()->json([
+                'data' => $customer
+            ], 200);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Có lỗi xảy ra: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteCustomer(Request $request) {
+        try {
+            $customer = Customers::where('id', $request->input('id'))->first();
+            if ($customer) {
+                $customer->delete();
+            }
+            return response()->json([
+                'message' => "Xóa khách hàng thành công!"
+            ], 200);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Có lỗi xảy ra: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+}

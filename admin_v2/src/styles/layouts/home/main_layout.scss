@@ -1,0 +1,21 @@
+@use '../../abstracts/mixins/flex' as *;
+
+.wrap-home-page {
+    width: 100dvw;
+    min-height: 100dvh;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(200, 200, 200, 0.368);
+    position: relative;
+}
+
+.wrap-work-space {
+    width: 100dvw;
+    height: 100dvh;
+    overflow-y: auto;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}

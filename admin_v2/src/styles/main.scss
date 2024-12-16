@@ -1,0 +1,42 @@
+// BASE
+@use './base/base';
+
+
+// COMPONENTS
+@use './components/header.scss';
+@use './components/sidebar.scss';
+
+
+// LAYOUTS
+@use './layouts/home/main_layout.scss';
+@use './layouts/login.scss';
+@use './layouts/register.scss';
+
+    // dashboard
+    @use './layouts/dashboard/dashboard.scss';
+    @use './layouts/dashboard/charts.scss';
+
+    // orders
+    @use './layouts/orders/orders.scss';
+
+    // products 
+    @use './layouts/products/products.scss';
+    @use './layouts/products/add_prd.scss';
+
+    // customers
+    @use './layouts/customers/customers.scss';
+
+    // settings
+    @use './layouts/settings/settings.scss';
+
+    // post
+    @use './layouts/post/post.scss';
+    
+    // sale
+    @use './layouts/sale/sale.scss';
+
+    // voucher
+    @use './layouts/voucher/voucher.scss';
+
+// VENDORS
+@use './vendor/vendor';
