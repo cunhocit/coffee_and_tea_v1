@@ -53,6 +53,15 @@ export default function NavigationBar(){
                             Đăng nhập
                         </Link>
                     </li>
+                    <li>
+                        <div className="wrap-account-menu-2">
+                            <div>
+                                <h4>Thanh Loi</h4>
+                                <Link to={'/user'}>Thông tin cá nhân</Link>
+                            </div>
+                            <img src="src/assets/image/9_1734193621.jpeg" alt="avatar"/>
+                        </div>
+                    </li>
                 </ul>
 
                 <div className='wrap-login-btn'>
@@ -62,22 +71,16 @@ export default function NavigationBar(){
                 </div>
                 
                 <div className="wrap-account-menu">
-                    <img src="" alt="avatar"/>
+                    <div>
+                        <h4>Thanh Loi</h4>
+                        <Link to={'/user'}>Thông tin cá nhân</Link>
+                    </div>
+                    <img src="src/assets/image/9_1734193621.jpeg" alt="avatar"/>
                 </div>
 
                 <div className="sidebar-btn">
                     <FontAwesomeIcon icon={sidebarIcon} size='2xl' onClick={handleShowSidebar}/>
                 </div>
-            </div>
-
-            {/* ACCOUNT DROPDOWN MENU */}
-            <div className="wrap-dropdown-account-menu">
-                <ul className="sidebar-ul">
-                    <li><a href="#">Đơn hàng</a></li>
-                    <li><a href="#">Lịch sử giao dịch</a></li>
-                    <li><a href="#">Cài đặt chung</a></li>
-                    <li><a href="#">Đăng xuất</a></li>
-                </ul>
             </div>
         </header>
     );

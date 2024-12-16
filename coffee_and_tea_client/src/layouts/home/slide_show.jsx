@@ -67,7 +67,7 @@ export const SlideShow = ({slideShowRef, nextSection}) => {
                     </Swiper>
 
                     <div className="about-us-next" onClick={nextSection}>
-                        <a>Cửa hàng</a>
+                        <a href='/store'>Cửa hàng</a>
                     </div>
                 </div>
             </section>
