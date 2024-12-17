@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faStore, faMagnifyingGlass,
@@ -10,11 +9,12 @@ import { Link } from 'react-router-dom';
 
 export default function NavigationBar(){
     const { sidebarIcon, isSidebarOpen, handleShowSidebar } = useSidebar();
+    const JWT_TOKEN = localStorage.getItem('jwt_token');
 
     return (
         <header className="header">
             <div className="wrap-header-contents">
-                <div className="logo" ><img src="/image.png" alt="logo"/></div>
+                <img className="logo" src="/logo-white.png" alt="logo"/>
 
                 <ul className={`nav-ul ${isSidebarOpen ? 'open' : ''}`}>
                     <li>
@@ -29,12 +29,12 @@ export default function NavigationBar(){
                             Cửa hàng
                         </Link>
                     </li>
-                    {/* <li>
+                    <li>
                         <Link className="instruct" to="/post">
                             <FontAwesomeIcon icon={faIndustry} size="sm" />
                             Hướng dẫn
                         </Link>
-                    </li> */}
+                    </li>
                     <li>
                         <Link className="instruct" to="/contact">
                             <FontAwesomeIcon icon={faPhone} size="sm" />
@@ -47,36 +47,20 @@ export default function NavigationBar(){
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </div>
                     </li>
-                    <li id='login-btn-li'>
-                        <Link className="sidebar-login-form" to={'/login'}>
+                    <li id='login-btn-li' style={{display: !JWT_TOKEN ? 'flex' : 'none'}}>
+                        <Link to={'/login'}>
                             <FontAwesomeIcon icon={faRightToBracket} />
                             Đăng nhập
                         </Link>
                     </li>
-                    <li>
-                        <div className="wrap-account-menu-2">
-                            <div>
-                                <h4>Thanh Loi</h4>
-                                <Link to={'/user'}>Thông tin cá nhân</Link>
-                            </div>
-                            <img src="src/assets/image/9_1734193621.jpeg" alt="avatar"/>
+                    <li className="wrap-account-menu-2" style={{display: JWT_TOKEN ? 'flex' : 'none'}}>
+                        <div>
+                            <h4>Thanh Loi</h4>
+                            <Link to={'/user'}>Thông tin cá nhân</Link>
                         </div>
+                        <img src="src\assets\img\image1.png" alt="avatar"/>
                     </li>
                 </ul>
-
-                <div className='wrap-login-btn'>
-                    <button className="login-btn" type="submit">
-                        <Link to={'/login'}>Đăng nhập</Link>
-                    </button>
-                </div>
-                
-                <div className="wrap-account-menu">
-                    <div>
-                        <h4>Thanh Loi</h4>
-                        <Link to={'/user'}>Thông tin cá nhân</Link>
-                    </div>
-                    <img src="src/assets/image/9_1734193621.jpeg" alt="avatar"/>
-                </div>
 
                 <div className="sidebar-btn">
                     <FontAwesomeIcon icon={sidebarIcon} size='2xl' onClick={handleShowSidebar}/>

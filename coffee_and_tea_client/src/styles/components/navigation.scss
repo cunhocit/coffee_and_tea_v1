@@ -15,14 +15,7 @@
 }
 
 .logo {
-    height: 80%;
-    padding: 0.5rem;
-    img {
-        height: 100%;
-        border-radius: 100%;
-        padding: 0.5rem;
-        border: 2px solid white;
-    }
+    height: 100%;
 }
 
 .wrap-header-contents {
@@ -36,6 +29,7 @@
     @include flex-row-center-center;
     align-items: center;
     gap: 2rem;
+    padding: 0 2rem;
 
     @include respond(tablet) {
         padding: 0.5rem;
@@ -66,7 +60,7 @@
     }
 
     @include respond(phone) {
-        padding: 0.5rem 1rem;
+        padding: 2rem 1rem;
         position: absolute;
         top: -1000%;
         width: 100%;
@@ -139,13 +133,58 @@
 }
 
 #login-btn-li {
-    display: none;
+    align-items: center;
     cursor: pointer;
-    @include respond(tablet) {
-        display: inline-flex;
+
+    a {
+        border: 2px solid white;
+        border-radius: 50px;
+        height: 40px;
+        padding: 0.5rem 0.7rem;
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        transition: 0.5s;
+        font-size: 0.9rem;
+        
+        &::before {
+            content: none;
+        }
+
+        @include respond(phone) {
+            @include underline-animation(white, 0.15rem);
+            background-color: transparent;
+            border: none;
+            color: white;
+            padding: 0;
+            height: auto;
+            font-weight: normal;
+        }
+        @include respond(tablet) {
+            @include underline-animation(white, 0.15rem);
+            background-color: transparent;
+            border: none;
+            color: white;
+            padding: 0;
+            height: auto;
+            font-weight: normal;
+        }
+
+        svg {
+            display: none;
+
+            @include respond(phone) {
+                display: flex;
+            }
+            @include respond(tablet) {
+                display: flex;
+            }
+        }
     }
-    @include respond(phone) {
-        display: inline-flex;
+
+    a:hover {
+        background-color: black;
+        color: white;
     }
 }
 
@@ -248,17 +287,16 @@
     height: 100%;
     justify-content: left;
     align-items: center;
-    flex-direction: row-reverse;
+    flex-direction: row;
     gap: 0.5rem;
     color: white;
     cursor: pointer;
-    display: none;
 
     @include respond(tablet) {
-        display: none;
+        flex-direction: row-reverse;
     }
     @include respond(phone) {
-        display: none;
+        flex-direction: row-reverse;
     }
 
     div {
@@ -272,8 +310,9 @@
     }
     
     img {
-        height: 50px;
-        width: 50px;
+        height: 35px;
+        width: 35px;
+        object-fit: cover;
         border-radius: 100%;
     }
 }
@@ -289,10 +328,10 @@
     display: none;
 
     @include respond(tablet) {
-        display: none;
+        display: none !important;
     }
     @include respond(phone) {
-        display: none;
+        display: none !important;
     }
 
     div {
