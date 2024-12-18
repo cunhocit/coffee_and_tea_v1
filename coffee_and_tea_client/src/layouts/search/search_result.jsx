@@ -85,15 +85,6 @@ export const SearchResult = ({openFilter, handleOpenFilter}) => {
 
                         <hr />
 
-                        <Select
-                            className="choose-oxy"
-                            options={optionAddressProvin()}
-                            isClearable
-                            placeholder='Nơi bán'
-                        />
-
-                        <hr />
-
                         <div className="box-filter-price">
                             <p>Khoảng giá</p>
                             <div className="price-about-box">

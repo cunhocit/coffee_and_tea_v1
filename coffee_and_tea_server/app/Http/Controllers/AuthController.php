@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Models\Admin;
+use App\Models\Customers;
 use App\Models\PasswordReset;
 use App\Models\VerifyEmail;
 use App\Security\CryptAES;
@@ -45,7 +46,7 @@ class AuthController extends Controller {
                 'verify' => 0
             ]);
 
-            $this->SendEmail($email, 'verify_account');
+            $this->SendEmail($email, 'verify_account', 'admin');
 
             return response()->json([
                 'message' => 'Đăng ký thành công.\nVui lòng kiểm tra email để xác thực tài khoản.\nXin cảm ơn!',
@@ -83,7 +84,7 @@ class AuthController extends Controller {
                 // đúng => check verify: chưa xác thực => xác thực => đăng nhập
                 if ($admin->verify === 0) {
 
-                    $this->SendEmail($email, 'verify_account');
+                    $this->SendEmail($email, 'verify_account', 'admin');
 
                     return response()->json([
                         'message' => 'Tài khoản chưa được kích hoạt'
@@ -156,7 +157,7 @@ class AuthController extends Controller {
                 ], 404);
             }
 
-            $this->SendEmail($email, 'forgot_password');
+            $this->SendEmail($email, 'forgot_password', 'admin');
 
             return response()->json([
                 'message' => 'Kiểm tra email để lấy lại mật khẩu'
@@ -172,10 +173,21 @@ class AuthController extends Controller {
 /* --------------------------------------------------------------------------------------------------------- */
 
     // Gửi mail xác thực + lấy lại mật khẩu
-    public function SendEmail($email, $handle) {
+    public static function SendEmail($email, $handle, $type) {
         try {
-            $admin = Admin::where('email', $email)->first();
             $token = Str::random(64);
+            $admin = new Admin();
+            $customer = new Customers();
+            $name = '';
+
+            if ($type === 'admin') {
+                $admin = Admin::where('email', $email)->first();
+                $name = $admin->name;
+            }
+            if ($type === 'customer'){
+                $customer = Customers::where('email', $email)->first();
+                $name = $customer->name;
+            }
 
             // handle === true: xác thực tài khoản
             // handle === false: lấy lại mật khẩu
@@ -189,9 +201,10 @@ class AuthController extends Controller {
                 ]);
 
                 Mail::send('emails.active_account', [
-                    'name' => $admin->name,
+                    'name' => $name,
                     'email' => $email,
                     'token' => $token,
+                    'type' => $type,
                     'expires_at' => now()->addMinutes(5)
                 ], function($message) use ($email, $admin) {
                     $message->to($email, $admin->name)
@@ -208,12 +221,13 @@ class AuthController extends Controller {
                 ]);
 
                 Mail::send('emails.forgot_password', [
-                    'name' => $admin->name,
+                    'name' => $name,
                     'email' => $email,
                     'token' => $token,
+                    'type' => $type,
                     'expires_at' => now()->addMinutes(5)
-                ], function($message) use ($email, $admin) {
-                    $message->to($email, $admin->name)
+                ], function($message) use ($email, $name) {
+                    $message->to($email, $name,)
                             ->subject('Lấy lại mật khẩu tài khoản Coffee & Tea');
                 });
             }
@@ -234,7 +248,7 @@ class AuthController extends Controller {
         Nếu token hợp lệ, cập nhật trạng thái admin và xóa token
         Nếu token hết hạn, báo lỗi và gửi lại email xác thực mới
      */
-    public function VerifyToken($email, $token, $handle) {
+    public function VerifyToken($email, $token, $handle, $type) {
         try {
             if ($handle == 'verify_account') {
                 $verifyEmail = VerifyEmail::where('email', $email)
@@ -249,7 +263,7 @@ class AuthController extends Controller {
 
             // kiểm tra tồn tại email và token
             if (!$verifyEmail) {
-                $this->SendEmail($email, $handle);
+                $this->SendEmail($email, $handle, $type);
                 return redirect()->route('verify.page')->with([
                     'status' => 'invalid',
                 ]);
@@ -258,7 +272,7 @@ class AuthController extends Controller {
             // Kiểm tra token hết hạn
             // now() time hiện tại so sánh bằng gt() => kiểm tra nếu now() > expires_at => true: token hết hạn
             if (now()->gt($verifyEmail->expires_at)) {
-                $this->SendEmail($email, $handle);
+                $this->SendEmail($email, $handle, $type);
                 return redirect()->route('verify.page')->with([
                     'status' => 'expired'
                 ]);
@@ -266,16 +280,31 @@ class AuthController extends Controller {
 
             // Cập nhật dữ liệu phụ thuộc vào handle
             if ($handle == 'verify_account') {
-                Admin::where('email', $email)->update([
-                    'verify' => 1,
-                    'verify_at' => now()
-                ]);
+                if ($type === 'admin') {
+                    Admin::where('email', $email)->update([
+                        'verify' => 1,
+                        'verify_at' => now()
+                    ]);
+                }
+                if ($type === 'customer') {
+                    Customers::where('email', $email)->update([
+                        'verify' => 1,
+                        'verify_at' => now()
+                    ]);
+                }
             }
             if ($handle == 'forgot_password'){
                 $newPassword = self::GetNewPassword();
-                Admin::where('email', $email)->update([
-                    'password' => CryptAES::hashPassword($newPassword)
-                ]);
+                if ($type === 'admin') {
+                    Admin::where('email', $email)->update([
+                        'password' => CryptAES::hashPassword($newPassword)
+                    ]);
+                }
+                if ($type === 'customer') {
+                    Customers::where('email', $email)->update([
+                        'password' => CryptAES::hashPassword($newPassword)
+                    ]);
+                }
             }
 
             // Xóa token trong database sau khi kích hoạt

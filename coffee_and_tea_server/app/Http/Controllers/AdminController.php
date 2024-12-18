@@ -97,7 +97,7 @@ class AdminController extends Controller {
     public function changePasswordAdmin(Request $request) {
         try {
             $admin = Admin::where('id', $request->input('id'))->first();
-            
+
             $password = $request->input('password');
             $new_password = $request->input('new_password');
 

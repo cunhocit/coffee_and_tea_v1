@@ -16,8 +16,10 @@ import { User } from './pages/user/user_dashboard';
 import { UserChangePassword } from './pages/user/user_change_pass';
 import { UserOrders } from './pages/user/user_orders';
 import { UserDiposit } from './pages/user/user_diposit';
+import { useTokenExpiration } from './hooks/useTokenExpiration';
 
 function App() {
+  useTokenExpiration();
   return (
     <Router>
       <Routes>

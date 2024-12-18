@@ -9,12 +9,14 @@ import { Link } from 'react-router-dom';
 
 export default function NavigationBar(){
     const { sidebarIcon, isSidebarOpen, handleShowSidebar } = useSidebar();
-    const JWT_TOKEN = localStorage.getItem('jwt_token');
+    const JWT_TOKEN = localStorage.getItem('jwt_token_customer');
 
     return (
         <header className="header">
             <div className="wrap-header-contents">
-                <img className="logo" src="/logo-white.png" alt="logo"/>
+                <div className="logo">
+                    <img src="/image.png" alt="logo"/>
+                </div>
 
                 <ul className={`nav-ul ${isSidebarOpen ? 'open' : ''}`}>
                     <li>

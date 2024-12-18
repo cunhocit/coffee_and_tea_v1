@@ -6,9 +6,21 @@ import { faFacebook, faGoogle, faTwitter} from '@fortawesome/free-brands-svg-ico
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { PasswordReset_API } from '../app/api/auth';
+import { isEmail } from '../app/valid/baseValid';
 
 export default function PassowrdReset() {
     const [email, setEmail] = useState('');
+
+    const handlePasswordReset = () => {
+        if (!email) {
+            alert('Bạn chưa nhập email!')
+            return;
+        }
+        if (isEmail(email)) {
+            PasswordReset_API(email);
+        }
+    }
 
     return(
         <>
@@ -31,7 +43,7 @@ export default function PassowrdReset() {
                         </label>
                     </div>
 
-                    <div className='login-box-btn'>
+                    <div className='login-box-btn' onClick={handlePasswordReset}>
                         <button className='login-btn'>
                             Gửi mật khẩu mới
                             <FontAwesomeIcon icon={faLeaf} style={{marginLeft: '5px'}}/>

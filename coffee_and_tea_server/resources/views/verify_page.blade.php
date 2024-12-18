@@ -31,7 +31,6 @@
                 <!-- xác thực thành công -->
                 <p style="font-size: 2rem; font-weight: bold;">Xác thực thành công</p>
                 <p style="font-size: 2rem;">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
-                <a href="http://localhost:5700" style="font-size: 2rem; color: white">Trở về trang chủ</a>
             @elseif (session('status') === 'expired')
                 <!-- token đã hết hạn -->
                 <p style="font-size: 2rem; font-weight: bold;">Token đã hết hạn!</p>
@@ -50,10 +49,8 @@
                 <!-- lấy mật khẩu mới -->
                 <p style="font-size: 2rem; font-weight: bold;">Tạo mật khẩu mới thành công!</p>
                 <p style="font-size: 2rem;">Mật khẩu mới của bạn là: <u><i>{{ session('message') }}</i></u></p>
-                <p style="font-size: 2rem;">Hãy đăng nhập và đổi mật khẩu</p>
-                <a href="http://localhost:5700" style="font-size: 2rem; color: white">Trang chủ</a>
+                <p style="font-size: 2rem;">Hãy đăng nhập lại và đổi mật khẩu</p>
             @endif
-
 
         </div>
     </div>

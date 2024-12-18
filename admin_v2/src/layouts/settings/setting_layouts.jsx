@@ -6,6 +6,7 @@ import { useGetAdmin } from "../../hooks/useAdmin";
 import { adminUpadeValid } from "../../app/valid/adminValid";
 import { updateAdmin, updateAvatar } from "../../app/api/adminApi";
 import { Link } from "react-router-dom";
+import { LogoutAPI } from "../../app/api/auth";
 
 export default function SettingsLayout() {
     const targetInputFile = useRef(null);
@@ -56,6 +57,8 @@ export default function SettingsLayout() {
     }
 
     const handleLogout = () => {
+        const ID_ADMIN = localStorage.getItem('id_admin');
+        LogoutAPI(ID_ADMIN);
         localStorage.clear();
         window.location.reload();
     }

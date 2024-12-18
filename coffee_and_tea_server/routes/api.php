@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthCustomerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
@@ -60,9 +61,22 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/log_out_admin', [AuthController::class, 'AdminLogOut']);
 });
 
+
+
+
 Route::post('/admin_register', [AuthController::class, 'AdminRegister']);
 Route::post('/admin_login', [AuthController::class, 'AdminLogin']);
 Route::post('/admin_forgot_password', [AuthController::class, 'AdminForgotPassword']);
+
+
+Route::post('/customer_register', [AuthCustomerController::class, 'CustomerRegister']);
+Route::post('/customer_login', [AuthCustomerController::class, 'CustomerLogin']);
+Route::post('/customer_password_reset', [AuthCustomerController::class, 'CustomerPasswordReset']);
+
+
+
+
+
 
 Route::get('/products/images/{filename}', function ($filename) {
     $path = storage_path('app/public/products/' . $filename);

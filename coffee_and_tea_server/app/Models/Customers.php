@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
 
-class Customers extends Model
+class Customers extends Model implements JWTSubject
 {
-    use HasFactory;
+    use Notifiable;
+
     protected $table = 'customer';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -25,4 +28,15 @@ class Customers extends Model
         'created_at',
         'updated_at',
     ];
+
+    // JWT required methods
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

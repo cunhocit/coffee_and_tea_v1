@@ -60,6 +60,10 @@
     @include respond(tablet) {
         font-size: 0.8rem;
     }
+    
+    @include respond(phone) {
+        font-size: 0.8rem;
+    }
 }
 
 .data-box-top {
@@ -70,6 +74,10 @@
 .in4-box {
     @include flex-column-center-center;
     text-align: right;
+
+    @include respond(phone) {
+        font-size: 0.9rem;
+    }
 }
 
 .in4-box p {
@@ -81,6 +89,9 @@
 
 .in4-box h3 {
     @include respond(tablet) {
+        font-size: 0.8rem;
+    }
+    @include respond(phone) {
         font-size: 0.8rem;
     }
 }

@@ -82,7 +82,7 @@ export default function OverviewDashboard({data}) {
                     </div>
                     <hr />
                     <p className="sale-title">
-                        <span style={{color: "green"}}>{cusOnl}</span> 
+                        <span style={{color: "green"}}>{cusOnl} </span>
                         tài khoản đang online
                     </p>
                 </div>

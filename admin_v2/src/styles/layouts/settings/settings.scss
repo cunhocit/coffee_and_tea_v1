@@ -41,6 +41,7 @@
         align-items: center;
         padding: 2rem;
         gap: 1rem;
+        flex-wrap: wrap;
 
         .-setting-button-item {
             @include flex-row-center-center;
@@ -54,6 +55,10 @@
             font-weight: bold;
             width: 180px;
             height: 45px;
+ 
+            @include respond(phone) {
+                width: 100%;
+            }
 
             input {
                 border: 1px solid red;

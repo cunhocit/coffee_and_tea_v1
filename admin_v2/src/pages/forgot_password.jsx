@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faHeart, faLeaf } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faCoffee, faLeaf } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import { ForgotPasswordAPI } from '../app/api/auth';
 import { Link } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -15,39 +16,49 @@ export default function ForgotPassword() {
 
     return(
         <>
-        <div className="wrap-form-login" >
-            <div className="login-box">
-                <h1>Quên mật khẩu
-                    <FontAwesomeIcon icon={faLeaf} />
-                </h1>
+        <HelmetProvider>
+            <Helmet> <title>Quên mật khẩu</title> </Helmet>
 
-                <div className="input-box">
-                    <label htmlFor="">
-                        <FontAwesomeIcon icon={faUser} />
-                        <input type="email" placeholder="Email" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                </div>
+            <div className="wrap-form-login" >
+                <div className="login-box">
+                    <h1>Quên mật khẩu
+                        <FontAwesomeIcon icon={faCoffee} />
+                    </h1>
 
-                <button className='login-box-btn' onClick={handleForgotPassword}>Gửi mật khẩu mới</button>
+                    <div className="input-box">
+                        <label htmlFor="">
+                            <FontAwesomeIcon icon={faUser} />
+                            <input type="email" placeholder="Email" 
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                    </div>
 
-                <div className="label-register">
-                    <p>Tôi nhớ ra mật khẩu rồi.</p>
-                    <FontAwesomeIcon icon={faHeart} />
-                    <Link to={'/login'}>Đăng nhập</Link>
-                </div>
+                    <div className='login-box-btn' onClick={handleForgotPassword}>
+                        <button className='login-btn'>
+                            Gửi mật khẩu mới
+                            <FontAwesomeIcon icon={faLeaf} style={{marginLeft: '5px'}}/>
+                        </button>
+                    </div>
 
-                <div className='bottom-box'>
-                    <div className='box-icons'>
-                        <FontAwesomeIcon className='fa-fb' icon={faFacebook} />
-                        <FontAwesomeIcon className='fa-gg' icon={faGoogle} />
-                        <FontAwesomeIcon className='fa-tt' icon={faTwitter} />
+                    <div className="label-register">
+                        <p>Tôi nhớ ra mật khẩu rồi!</p>
+                        <Link to={'/login'}>Đăng nhập</Link>
+                        <FontAwesomeIcon icon={faLeaf} />
+                    </div>
+
+                    <div className='bottom-box'>
+                        <div className='box-icons'>
+                            <FontAwesomeIcon className='fa-fb' icon={faFacebook} />
+                            <FontAwesomeIcon className='fa-gg' icon={faGoogle} />
+                            <FontAwesomeIcon className='fa-tt' icon={faTwitter} />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        </HelmetProvider>
         </>
     )
 }

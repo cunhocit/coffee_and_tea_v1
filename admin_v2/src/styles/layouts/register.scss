@@ -13,16 +13,17 @@
 
 .register-box {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
     width: 100dvw;
     height: 100dvh;
     background-color: white;
     border-radius: 1rem;
-    gap: 0.5rem;
+    gap: 2rem;
     
     @include respond(phone) {
+        justify-content: center;
         width: 100%;
         height: 100%;
     }
@@ -69,6 +70,10 @@
     align-items: center;
     gap: 1rem;
     width: 80%;
+
+    @include respond(phone) {
+        width: 100%;
+    }
 }
 
 .input-box-register label {

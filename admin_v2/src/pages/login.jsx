@@ -10,6 +10,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import { LoginAPI } from "../app/api/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,45 +24,59 @@ export default function Login() {
 
   return (
     <>
-      <div className="wrap-form-login">
-        <div className="login-box">
-          <h1>
-            Đăng nhập
-            <FontAwesomeIcon icon={faLeaf} />
-          </h1>
+      <HelmetProvider>
+            <Helmet> <title>Đăng nhập</title> </Helmet>
 
-          <div className="input-box">
-            <label htmlFor="">
-              <FontAwesomeIcon icon={faUser} />
-              <input type="email" placeholder="Email" 
-                value={email} onChange={(e) => setEmail(e.target.value)}/>
-            </label>
+            <div className="wrap-form-login">
+                <div className="login-box">
+                    <h1>
+                        Đăng nhập
+                        <FontAwesomeIcon icon={faCoffee} />
+                    </h1>
 
-            <label htmlFor="">
-              <FontAwesomeIcon icon={faLock} />
-              <input type="password" placeholder="Mật khẩu"
-              value={password} onChange={(e) => setPassword(e.target.value)}/>
-            </label>
+                    <div className="input-box">
+                        <label htmlFor="">
+                            <FontAwesomeIcon icon={faUser} />
+                            <input type="email" placeholder="Email" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
 
-            <Link to={'/forgot_password'}><p>Quên mật khẩu</p></Link>
-          </div>
+                        <label htmlFor="">
+                            <FontAwesomeIcon icon={faLock} />
+                            <input type="password" placeholder="Mật khẩu"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </label>
 
-          <button className="login-box-btn" onClick={handleLogin}>Đăng nhập</button>
+                        <Link to={'/password_reset'}><p>Quên mật khẩu</p></Link>
+                    </div>
 
-          <div className="label-register">
-            <p>Chưa có tài khoản?</p>
-            <Link to={'/register'}><p>Đăng ký</p></Link>
-          </div>
+                    <div className="login-box-btn">
+                        <button className="login-btn" onClick={handleLogin}>
+                            Đăng nhập
+                            <FontAwesomeIcon icon={faLeaf} style={{marginLeft: '5px'}}/>
+                        </button>
+                    </div>  
 
-          <div className="bottom-box">
-            <div className="box-icons">
-              <FontAwesomeIcon className="fa-fb" icon={faFacebook} />
-              <FontAwesomeIcon className="fa-gg" icon={faGoogle} />
-              <FontAwesomeIcon className="fa-tt" icon={faTwitter} />
+                    <div className="label-register">
+                        <p>Chưa có tài khoản?</p>
+                        <Link to={'/register'}><p>Đăng ký</p></Link>
+                    </div>
+
+                    <div className="bottom-box">
+                        <div className="box-icons">
+                            <FontAwesomeIcon className="fa-fb" icon={faFacebook} />
+                            <FontAwesomeIcon className="fa-gg" icon={faGoogle} />
+                            <FontAwesomeIcon className="fa-tt" icon={faTwitter} />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
+
+        </HelmetProvider>
     </>
   );
 }

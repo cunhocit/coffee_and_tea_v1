@@ -1,22 +1,29 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope, faPhone, faLeaf, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
-// import { RegisterAPI } from '../app/api/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Register_API } from '../app/api/auth';
+import { RegisterValid } from '../app/valid/authValid';
 
 export default function Register() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [rePassword, setRePasswordC] = useState('');
-    const [phone, setPhone] = useState('');
+    const CUSTOMER_DEFAULT = {
+        name: '',
+        email: '',
+        password: '',
+        rePassword: '',
+        phone: ''
+    }
+    const [customer, setCustomer] = useState(CUSTOMER_DEFAULT)
+    const navigate = useNavigate();
 
     const handleRegister = () => {
-        // RegisterAPI(name, email, password, rePassword, phone);
+        if (RegisterValid(customer)) {
+            Register_API(customer);
+            setCustomer(CUSTOMER_DEFAULT);
+            navigate('/login')
+        }
     }
 
     return (
@@ -33,31 +40,41 @@ export default function Register() {
                         <label htmlFor="">
                             <FontAwesomeIcon icon={faUser} />
                             <input type="text" placeholder='Họ và tên' 
-                                value={name} onChange={(e) => setName(e.target.value)}/>
+                                value={customer.name} 
+                                onChange={(e) => setCustomer({...customer, name: e.target.value})}
+                            />
                         </label>
 
                         <label htmlFor="">
                             <FontAwesomeIcon icon={faEnvelope} />
                             <input type="email" placeholder="Email" 
-                                value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                value={customer.email}
+                                onChange={(e) => setCustomer({...customer, email: e.target.value})}
+                            />
                         </label>
 
                         <label htmlFor="">
                             <FontAwesomeIcon icon={faLock} />
                             <input type="password" placeholder="Mật khẩu" 
-                                value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                value={customer.password} 
+                                onChange={(e) => setCustomer({...customer, password: e.target.value})}
+                            />
                         </label>
 
                         <label htmlFor="">
                             <FontAwesomeIcon icon={faLock} />
                             <input type="password" placeholder="Nhập lại mật khẩu" 
-                                value={rePassword} onChange={(e) => setRePasswordC(e.target.value)}/>
+                                value={customer.rePassword} 
+                                onChange={(e) => setCustomer({...customer, rePassword: e.target.value})}
+                            />
                         </label>
 
                         <label htmlFor="">
                             <FontAwesomeIcon icon={faPhone} />
                             <input type="phone" placeholder="Số điện thoại" 
-                                value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                                value={customer.phone} 
+                                onChange={(e) => setCustomer({...customer, phone: e.target.value})}
+                            />
                         </label>
                     </div>
                     

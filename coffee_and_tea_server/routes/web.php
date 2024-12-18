@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/VerifyToken/{email}/{token}/{handle}',
+Route::get('/VerifyToken/{email}/{token}/{handle}/{type}',
             [AuthController::class, 'VerifyToken'])->name('verify.token');
 
 Route::get('/verify_page', function () {

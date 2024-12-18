@@ -75,7 +75,7 @@ export default function Sidebar({openSB, handleOpenSB}) {
                         </div>
                     </Link>
 
-                    <Link to={'/sale'}>
+                    {/* <Link to={'/sale'}>
                         <div className='sidebar-item' >
                             <div className="-item">
                                 <FontAwesomeIcon icon={faTag} />
@@ -100,7 +100,7 @@ export default function Sidebar({openSB, handleOpenSB}) {
                                 <p>Bài viết</p>
                             </div>
                         </div>
-                    </Link>
+                    </Link> */}
                     
                     <Link to={'/settings'}>
                         <div className='sidebar-item' >

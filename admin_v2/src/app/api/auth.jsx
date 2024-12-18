@@ -79,7 +79,7 @@ export const ForgotPasswordAPI = async (email) => {
   try {
     if (isValidEmail(email)) {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/password_reset",
+          "http://127.0.0.1:8000/api/admin_forgot_password",
           {
             email: encryptAES(email)
           },
