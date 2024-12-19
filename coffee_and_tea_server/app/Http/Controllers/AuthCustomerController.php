@@ -15,9 +15,11 @@ use App\Models\VerifyEmail;
 use App\Security\CryptAES;
 use App\Http\Controllers\AuthController;
 
-class AuthCustomerController extends Controller {
+class AuthCustomerController extends Controller
+{
 
-    public function CustomerRegister(Request $request) {
+    public function CustomerRegister(Request $request)
+    {
         try {
             $name = CryptAES::decryptAES($request->input('name'));
             $email = CryptAES::decryptAES($request->input('email'));
@@ -41,6 +43,7 @@ class AuthCustomerController extends Controller {
                 'email' => $email,
                 'password' => $request->input('password'),
                 'phone' => $phone,
+                'balance' => 0,
                 'verify' => 0,
                 'status' => 'offline'
             ]);
@@ -50,16 +53,15 @@ class AuthCustomerController extends Controller {
             return response()->json([
                 'message' => 'Đăng ký thành công.\nVui lòng kiểm tra email để xác thực tài khoản.\nXin cảm ơn!',
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Đăng ký thất bại, ' . $e->getMessage()
             ], 400);
-
         }
     }
 
-    public function CustomerLogin(Request $request) {
+    public function CustomerLogin(Request $request)
+    {
         try {
 
             $email = CryptAES::decryptAES($request->input('email'));
@@ -82,11 +84,10 @@ class AuthCustomerController extends Controller {
 
                     return response()->json([
                         'message' => 'Tài khoản chưa được kích hoạt'
-                        .'Vui lòng kiểm tra email: '
-                        .$email
-                        .' để kích hoạt tài khoản.Thanks!'
+                            . 'Vui lòng kiểm tra email: '
+                            . $email
+                            . ' để kích hoạt tài khoản.Thanks!'
                     ], 403);
-
                 }
 
                 $customer->status = 'online';
@@ -115,15 +116,15 @@ class AuthCustomerController extends Controller {
             return response()->json([
                 'message' => 'Mật khẩu không chính xác!'
             ], 401);
-
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Đăng nhập thất bại, ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function CustomerPasswordReset(Request $request) {
+    public function CustomerPasswordReset(Request $request)
+    {
         try {
             $email = CryptAES::decryptAES($request->input('email'));
 
@@ -139,12 +140,10 @@ class AuthCustomerController extends Controller {
             return response()->json([
                 'message' => 'Kiểm tra email để lấy lại mật khẩu'
             ], 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gửi mật khẩu mới thất bại, ' . $e->getMessage()
             ], 500);
         }
     }
-
 }
-

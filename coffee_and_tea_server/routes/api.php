@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductCustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -73,13 +74,14 @@ Route::post('/customer_register', [AuthCustomerController::class, 'CustomerRegis
 Route::post('/customer_login', [AuthCustomerController::class, 'CustomerLogin']);
 Route::post('/customer_password_reset', [AuthCustomerController::class, 'CustomerPasswordReset']);
 
+Route::get('/get_all_product', [ProductCustomerController::class, 'getAllProduct']);
 
 
 
 
 
 Route::get('/products/images/{filename}', function ($filename) {
-    $path = storage_path('app/public/products/' . $filename);
+    $path = storage_path('public/products/' . $filename);
     if (!file_exists($path)) {
         return response()->json(['message' => 'Image not found'], 404);
     }
@@ -99,4 +101,3 @@ Route::get('/admins/images/{filename}', function ($filename) {
     }
     return response()->file($path);
 });
-
