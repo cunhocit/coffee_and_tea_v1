@@ -30,7 +30,7 @@ export default function Home() {
 
                 <Header scrollToAbout={scrollToAbout}/>
 
-                <AboutUs aboutRef={aboutRef} nextSection={scrollToSlideShow} />
+                {/* <AboutUs aboutRef={aboutRef} nextSection={scrollToSlideShow} /> */}
                 
                 <SlideShow slideShowRef={slideShowRef} nextSection={scrollToTips}/>
 
