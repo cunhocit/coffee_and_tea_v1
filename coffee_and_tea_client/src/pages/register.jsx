@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faEnvelope, faPhone, faLeaf, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEnvelope, faPhone, faLeaf } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Register_API } from '../app/api/auth';
 import { RegisterValid } from '../app/valid/authValid';
@@ -16,24 +16,22 @@ export default function Register() {
         phone: ''
     }
     const [customer, setCustomer] = useState(CUSTOMER_DEFAULT)
-    const navigate = useNavigate();
 
     const handleRegister = () => {
         if (RegisterValid(customer)) {
             Register_API(customer);
             setCustomer(CUSTOMER_DEFAULT);
-            navigate('/login')
         }
     }
 
     return (
         <>
         <HelmetProvider>
-            <Helmet> <title>Quên mật khẩu</title> </Helmet>
+            <Helmet> <title>Đăng ký</title> </Helmet>
             <div className="wrap-form-register ">
                 <div className="login-box">
                     <h1>Đăng ký
-                        <FontAwesomeIcon icon={faCoffee} />
+                        <FontAwesomeIcon icon={faLeaf} />
                     </h1>
 
                     <div className="input-box">

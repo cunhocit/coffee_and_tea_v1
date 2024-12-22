@@ -31,7 +31,7 @@ export default function Sidebar({openSB, handleOpenSB}) {
             <div className={`wrap-sidebar ${openSB ? 'open' : ''}`} ref={sidebarRef}>
 
                 <div className="logo">
-                    <FontAwesomeIcon icon={faLeaf} />
+                    <FontAwesomeIcon icon={faCoffee} />
                 </div>
 
                 <div className={`hideSidebar ${openSB ? 'openSb' : ''}`} onClick={handleOpenSB} >
@@ -75,7 +75,7 @@ export default function Sidebar({openSB, handleOpenSB}) {
                         </div>
                     </Link>
 
-                    {/* <Link to={'/sale'}>
+                    <Link to={'/sale'}>
                         <div className='sidebar-item' >
                             <div className="-item">
                                 <FontAwesomeIcon icon={faTag} />
@@ -84,7 +84,7 @@ export default function Sidebar({openSB, handleOpenSB}) {
                         </div>
                     </Link>
 
-                    <Link to={'/voucher'}>
+                    {/* <Link to={'/voucher'}>
                         <div className='sidebar-item' >
                             <div className="-item">
                                 <FontAwesomeIcon icon={faTicket} />

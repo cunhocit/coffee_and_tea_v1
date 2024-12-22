@@ -2,7 +2,7 @@ import { isValidPhone } from "./audthValid";
 
 export const OrderValid = (order) => {
     for (const [key, value] of Object.entries(order)) {
-        if (!value) {
+        if (!value && key != 'transport' && key != 'discount_voucher') {
             alert(`Trường "${key}" không được để trống!`);
             return false;
         }

@@ -24,7 +24,7 @@ export default function Home() {
 
     return (
         <HelmetProvider>
-            <Helmet> <title>Coffee & Tea</title> </Helmet>
+            <Helmet> <title>Thế giới cá và thủy sinh</title> </Helmet>
 
             <div className="wrap-contents">
 

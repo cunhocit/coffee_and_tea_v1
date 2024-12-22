@@ -8,27 +8,35 @@ import { FlashSale } from "../layouts/store/flash_sale";
 import { TopSelling } from "../layouts/store/top_selling";
 import { ShowProductList } from "../layouts/store/show_product_list";
 import { ShoppingCartFinal } from "../components/shopping_cart_final";
+import { useGetProducts } from "../hooks/useProduct";
+import { CartProvider } from "../components/cart_contetn";
 
 export default function Store() {
+    const {data, fetchData, isLoading} = useGetProducts();
+    if (isLoading) return <></>
+
+
     return(
         <HelmetProvider>
-            <Helmet> <title>Cửa hàng cá và thủy sinh</title> </Helmet>
+            <Helmet> <title>Coffee & Tea</title> </Helmet>
 
             <div className="wrap-body-store">
 
                 <section className="-wrap-navigation">
                     <NavigationBar/>
                 </section>
-                
-                <ShoppingCartFinal />
 
-                <Banner />
+                <CartProvider>
+                    <ShoppingCartFinal />
 
-                <FlashSale />
+                    <Banner data={data} />
 
-                {/* <TopSelling /> */}
+                    <FlashSale data={data} />
 
-                <ShowProductList />
+                    {/* <TopSelling /> */}
+
+                    <ShowProductList data={data} />
+                </CartProvider>
 
                 <Footer />
             </div>

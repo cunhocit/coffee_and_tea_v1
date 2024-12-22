@@ -78,13 +78,13 @@ export const getAllPrdAPI = async () => {
     try {
         const jwt_token = localStorage.getItem("jwt_token");
         if (jwt_token) {
-          const response = await axios.post("http://127.0.0.1:8000/api/add_product", 
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/add_product", 
             newPrd,
             {
             headers: {
               Authorization: `Bearer ${jwt_token}`,
               "Content-Type": 'multipart/form-data',
-              'Accept': 'application/json'
             },
           });
     
@@ -160,7 +160,7 @@ export const updateProductSale = async (chooseSales) => {
     if (jwt_token) {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/update_product_sale",
-        chooseSales,
+        {products: chooseSales},
         {
           headers: {
             Authorization: `Bearer ${jwt_token}`,
@@ -168,10 +168,13 @@ export const updateProductSale = async (chooseSales) => {
           },
         }
       );
-      alert(response.data.message);
+      
+      if (response.status === 200 ) {
+        alert(response.data.message);
+      }
     }
   } catch (error) {
-    console.error("Error fetching products: ", error);
+    console.error("Error fetching products: ", error.response.data.message);
     throw error;
   }
 };

@@ -121,6 +121,14 @@ export function PrdInfoCpn({data, id}) {
             />
           </label>
 
+          <label className="value_box">
+            <p>Lượt mua</p>
+            <input type="text" name="quantity" disabled
+              value={product.turn_order}
+              onChange={(e) => setProduct({...product, turn_order: e.target.value})}
+            />
+          </label>
+
           {isUnlockInput && <div className="-add-prd-btn" onClick={handleUpdateProduct} >Cập nhật</div>}
         </div>
       </div>

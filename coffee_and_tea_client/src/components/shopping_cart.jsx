@@ -1,31 +1,29 @@
-import { faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { useCart } from "../hooks/CartContext";
+/* eslint-disable react/jsx-key */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { faCartShopping, faX } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom"
+import { useCart } from "./cart_contetn";
+import { useGetListProductsById } from "../hooks/useProduct";
 
-export const ShopingCart = ({ shopCart, handleOpenShopCart }) => {
+export const ShopingCart = ({shopCart, handleOpenShopCart}) => {
     const cartRef = useRef(null);
-    const { cartItems, setCartItems } = useCart();  // Chắc chắn rằng setCartItems được truyền đúng
-
+    const {cart, updateCart, deleteCart} = useCart();
+    const {data, fetchData, isLoading} = useGetListProductsById();
+    
     const handleClickOutside = (event) => {
         if (cartRef.current && !cartRef.current.contains(event.target)) {
-            handleOpenShopCart();
+            handleOpenShopCart(); 
         }
-    };
-
-    const handleQuantityChange = (id, newQuantity) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id ? { ...item, quantity: newQuantity > 0 ? newQuantity : 1 } : item
-            )
-        );
     };
 
     useEffect(() => {
         if (shopCart) {
             document.addEventListener("mousedown", handleClickOutside);
-        } else {
+        }else {
             document.removeEventListener("mousedown", handleClickOutside);
         }
 
@@ -34,56 +32,46 @@ export const ShopingCart = ({ shopCart, handleOpenShopCart }) => {
         };
     }, [shopCart]);
 
+    useEffect(() => {
+        if (cart >= 0) {
+            fetchData();
+        }
+    }, [cart]);
+
     return (
-        <div className={`wrap-shopping-cart ${!shopCart ? "hidden" : ""}`} ref={cartRef}>
-            <div className="shopping-cart-box">
-                <h2>
-                    <div>
-                        <FontAwesomeIcon icon={faCartShopping} />
-                        Giỏ hàng
-                    </div>
-                    <FontAwesomeIcon icon={faX} onClick={handleOpenShopCart} />
-                </h2>
-                <hr />
-                {cartItems.length > 0 ? (
+        <>
+            <div className={`wrap-shopping-cart ${!shopCart ? 'hidden' : ''}`} ref={cartRef}>
+                <div className="shopping-cart-box">
+                    <h2>
+                        <div>
+                            <FontAwesomeIcon icon={faCartShopping} />
+                            Giỏ hàng
+                        </div>
+                        <FontAwesomeIcon icon={faX} onClick={handleOpenShopCart}/>
+                    </h2>
+
+                    <hr />
+
                     <div className="shopping-cart-item">
-                        {cartItems.map((item) => (
-                            <div key={item.id} className="wrap-cart-item">
-                                <img src={`http://127.0.0.1:8000/storage/products/${item.image ? item.image : 'image.png'}`}
-                                alt={item.name} 
-                                style={{
-                                    width: '120px',           
-                                    height: '120px',           
-                                    objectFit: 'contain',      
-                                    display: 'block',   
-                                  }}
-                                />
+
+                        {data?.map((product) => (
+                            <div className="wrap-cart-item" key={product?.id}>
+                                <img src={`http://127.0.0.1:8000/storage/products/${product?.image ? product?.image : 'image.png'}`} alt="" />
                                 <div className="-cart-info">
-                                    <p>{item.name}</p>
-                                    <label className="-cart-info-item" htmlFor="">
-                                        Số lượng:
-                                        <input
-                                            type="number"
-                                            min={1}
-                                            max={100}
-                                            value={item.quantity}
-                                            placeholder="Số lượng"
-                                            onChange={(e) =>
-                                                handleQuantityChange(item.id, parseInt(e.target.value) || 1)
-                                            }
-                                        />
-                                    </label>
-                                    <p>Giá: {(item.price * item.quantity).toLocaleString("vi-VN")}đ</p>
-                                    <p>Khuyến mãi: {item.promotion || "Không có"}</p>
+                                    <p className="-cart-name">{product?.name}</p>
+                                    <p className="-cart-info-item">Đơn giá: {product?.price.toLocaleString('vi-VN')} đ</p>
+                                    <p className="-cart-info-item">Giảm giá: {product?.discount_percentage ? (product?.discount_percentage + '%') : 'Không có'}</p>
+                                    <p className="-cart-info-item">Giá chót: {(product?.price - product?.discount_percentage/100*product?.price).toLocaleString('vi-VN')} đ</p>
+                                    <div onClick={() => deleteCart(product?.id)}>Xóa</div>
                                 </div>
                             </div>
                         ))}
+
                     </div>
-                ) : (
-                    <p>Giỏ hàng của bạn hiện đang trống.</p>
-                )}
-                <Link to="/payment">Thanh toán ngay</Link>
+
+                    <Link to={'/payment'}>Thanh toán ngay</Link>
+                </div>
             </div>
-        </div>
-    );
-};
+        </>
+    )
+}

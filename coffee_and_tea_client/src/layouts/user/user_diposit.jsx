@@ -3,10 +3,14 @@ import { faBoxOpen, faCoins, faDollar, faGear, faHistory, faKey, faList, faSignO
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import { SideBarUser } from "./sidebar_user"
+import { useGetCustomerById } from "../../hooks/useCustomer"
 
 export const Diposit = () => {
     const [openSideBar, setOpenSideBar] = useState(false);
     const sideBarRef = useRef(null);
+    const [customer, setCustomer] = useState();
+    const {data, fetchData, isLoading} = useGetCustomerById();
 
     const handleOpenSideBar = () => setOpenSideBar(prev => !prev);
 
@@ -28,33 +32,17 @@ export const Diposit = () => {
         };
     }, [openSideBar])
 
+    useEffect(() => {
+        setCustomer(data);
+    }, [data]);
+
+    if (isLoading) return <></>
 
     return (
         <>
             <div className="wrap-dashboard" ref={sideBarRef}>
 
-                <div className={`-dashboard-sidebar ${openSideBar ? 'open' : ''}`} ref={sideBarRef}>
-                    <div className="-avatar-box">
-                        <img src="src\assets\img\slide_image\image3.png" alt="" />
-                        <div>
-                            <p>Thanh loi</p>
-                            <p className="-change-avatar">Đổi avatar</p>
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    <div className="-sidebar-list">
-                        <ul>
-                            <li><FontAwesomeIcon icon={faCoins} />192.000đ</li>
-                            <li><Link to={'/user'}><FontAwesomeIcon icon={faUser} />Thông tin</Link></li>
-                            <li><Link to={'/user_orders'}><FontAwesomeIcon icon={faBoxOpen} />Đơn hàng</Link></li>
-                            <li><Link to={'/user_change_password'}><FontAwesomeIcon icon={faKey} />Đổi mật khẩu</Link></li>
-                            <li><Link to={'/user_diposit'}><FontAwesomeIcon icon={faDollar} />Nạp tiền</Link></li>
-                            <li><FontAwesomeIcon icon={faSignOut} />Đăng xuất</li>
-                        </ul>
-                    </div>
-                </div>
+                <SideBarUser customer={customer} openSideBar={openSideBar} sideBarRef={sideBarRef} />
 
                 <div className="-dashboard-space" ref={sideBarRef}>
                     <div className="wrap-user-info">

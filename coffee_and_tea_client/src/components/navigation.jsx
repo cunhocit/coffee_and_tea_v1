@@ -1,22 +1,44 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faStore, faMagnifyingGlass,
          faRightToBracket, faPhone,
          faIndustry} from '@fortawesome/free-solid-svg-icons';
 import { useSidebar } from '../hooks/navigation';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useGetProducts } from '../hooks/useProduct';
+import { useGetCustomerById } from '../hooks/useCustomer';
+
+// localStorage.clear()
 
 export default function NavigationBar(){
+    const navigate = useNavigate();
     const { sidebarIcon, isSidebarOpen, handleShowSidebar } = useSidebar();
     const JWT_TOKEN = localStorage.getItem('jwt_token_customer');
+    const {data: customer, fetchData: fetchData2, isLoading: isLoading2} = useGetCustomerById();
+    const {data, fetchData, isLoading} = useGetProducts();
+    const [search, setSearch] = useState('');
+
+    const dataFilter = data?.products?.filter((item) => 
+        item.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const handleSearchEnter = (e) => {
+        if (e.key === 'Enter' && search != '') {
+            if (!localStorage.getItem('jwt_token_customer')) {
+                alert('Vui lòng đăng đăng nhập để tìm kiếm');
+                return;
+            }
+            navigate(`/search/${search}`);
+        }
+    };
+
 
     return (
         <header className="header">
             <div className="wrap-header-contents">
-                <div className="logo">
-                    <img src="/image.png" alt="logo"/>
-                </div>
+                <div className="logo"><img src="/image.png" alt="logo"/></div>
 
                 <ul className={`nav-ul ${isSidebarOpen ? 'open' : ''}`}>
                     <li>
@@ -31,12 +53,12 @@ export default function NavigationBar(){
                             Cửa hàng
                         </Link>
                     </li>
-                    <li>
-                        <Link className="instruct" to="/post">
+                    {/* <li>
+                        <Link className="instruct" to="/post/abc">
                             <FontAwesomeIcon icon={faIndustry} size="sm" />
                             Hướng dẫn
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link className="instruct" to="/contact">
                             <FontAwesomeIcon icon={faPhone} size="sm" />
@@ -45,11 +67,20 @@ export default function NavigationBar(){
                     </li>
                     <li id='search-li'>
                         <div className="search-bar">
-                            <input type="text" placeholder="Tìm kiếm"/>
+                            <input type="text" placeholder="Tìm kiếm"
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                                onKeyDown={handleSearchEnter}
+                            />
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </div>
+                        <div className='-result-search' style={{display: search === '' ? 'none' : 'flex'}}>
+                            {dataFilter?.map(e => (
+                                <div key={e.id}><Link to={`/product/${e.id}`}>{e.name}</Link></div>
+                            ))}
+                        </div>
                     </li>
-                    <li id='login-btn-li' style={{display: !JWT_TOKEN ? 'flex' : 'none'}}>
+                    <li id='login-btn-li' style={{display: JWT_TOKEN ? 'none' : 'flex'}}>
                         <Link to={'/login'}>
                             <FontAwesomeIcon icon={faRightToBracket} />
                             Đăng nhập
@@ -57,10 +88,10 @@ export default function NavigationBar(){
                     </li>
                     <li className="wrap-account-menu-2" style={{display: JWT_TOKEN ? 'flex' : 'none'}}>
                         <div>
-                            <h4>Thanh Loi</h4>
+                            <h4>{customer?.name}</h4>
                             <Link to={'/user'}>Thông tin cá nhân</Link>
                         </div>
-                        <img src="src\assets\img\image1.png" alt="avatar"/>
+                        <img src={`http://127.0.0.1:8000/storage/customers/${customer?.image ? customer?.image : 'image.png'}`} alt="avatar"/>
                     </li>
                 </ul>
 

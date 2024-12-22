@@ -26,11 +26,14 @@
                 width: 750px;
             }
 
-            img {
-                border: 1px solid black;
-                width: 150px;
-                height: 150px;
-                object-fit: cover;
+            .-img-container {
+
+                img {
+                    border: 1px solid black;
+                    width: 150px;
+                    height: 150px;
+                    object-fit: cover;
+                }
             }
 
             .-order-item-info {
@@ -58,14 +61,14 @@
                     }
 
                     span {
-                        color: rgb(8, 141, 61);
+                        color: rgb(0, 145, 39);
                         font-size: 0.9rem;
                     }
 
                     button {
                         padding: 0.3rem;
                         border: none;
-                        background-color: rgb(65, 61, 61);
+                        background-color: green;
                         color: white;
                         cursor: pointer;
                         border-radius: 2px;

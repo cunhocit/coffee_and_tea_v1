@@ -4,7 +4,7 @@ import { isValidEmail, isValidPhone } from "./audthValid";
 
 export const adminUpadeValid = (admin) => {
     for (const [key, value] of Object.entries(admin)) {
-        if (!value) {
+        if (!value && key) {
             alert('Vui lòng nhập đầy đủ thông tin!');
             return false;
         }

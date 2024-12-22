@@ -10,7 +10,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background-image: url('src/assets/image/background/bg_1.png');
+    background-image: url('src/assets/image/bg_2.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -72,7 +72,7 @@
 }
 
 .home-swiper-slide img {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.11);
+    border: 3px solid rgba(255, 255, 255, 0.373);
     border-radius: 10px;
     display: block;
     width: 100%;

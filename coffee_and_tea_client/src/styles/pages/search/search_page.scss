@@ -12,16 +12,17 @@
 .cart-shopping-svg {
     user-select: none;
     cursor: grab;
-    position: absolute;
     width: 50px;
     height: 50px;
-    background-color: rgb(0, 0, 0);
+    background-color: green;
     border-radius: 100%;
     @include flex-row-center-center;
     transition: 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
     font-size: 0.8rem;
     color: white;
     z-index: 9999999;
+    top: 30%;
+    right: 20%;
 
     svg {
         font-size: 0.8rem;
@@ -35,7 +36,7 @@
 }
 
 .cart-shopping-svg:hover {
-    color: rgb(0, 0, 0);
+    color: green;
     font-weight: bold;
     svg {
         display: none;
@@ -43,7 +44,7 @@
 }
 
 .cart-shopping-svg:hover {
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid green;
     background-color: white;
 }
 
@@ -126,6 +127,7 @@
         cursor: pointer;
         color: black;
         width: 150px;
+        z-index: 100;
     }
 
     .option-search-box {
@@ -186,8 +188,8 @@
 
     .prevPage:hover, .nextPage:hover {
         background-color: white;
-        color: rgb(0, 0, 0);
-        border: 2px solid rgb(0, 0, 0);
+        color: rgb(0, 134, 31);
+        border: 2px solid rgb(0, 134, 31);
     }
 }
 
@@ -217,6 +219,7 @@
 }
 
 .wrap-list-product-p {
+    min-width: 80%;
     max-width: 85%;
     display: flex;
     align-items: start;
@@ -238,12 +241,45 @@
     background-color: white;
     margin-top: 1rem;
     gap: 1.5rem;
+    position: relative;
 
     @include respond(tablet) {
         width: 90dvw;
     }
     @include respond(phone) {
         width: 95dvw;
+    }
+
+    .-w-result {
+        width: 60%;
+        background-color: rgba(255, 255, 255, 0.973);
+        height: 500px;
+        position: absolute;
+        top: 100%;
+        z-index: 9999;
+        box-shadow: 0 10px 20px rgba(41, 41, 41, 0.2);
+        border: 1px solid rgba(128, 128, 128, 0.092);
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        overflow: auto;
+
+        div {
+            transition: 0.4s;
+            width: 100%;
+            
+            a {
+                width: 100%;
+                padding: 0.8rem 2rem;
+                color: black;
+            }
+        }
+
+        div:hover {
+            background-color: rgba(17, 147, 0, 0.126);
+        }
     }
 
     .-svg-i {

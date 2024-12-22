@@ -14,6 +14,9 @@ use App\Models\PasswordReset;
 use App\Models\VerifyEmail;
 use App\Security\CryptAES;
 use App\Http\Controllers\AuthController;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class AuthCustomerController extends Controller
 {
@@ -104,11 +107,13 @@ class AuthCustomerController extends Controller
                 ];
                 $jwt_token = JWTAuth::fromUser($customer, $customeClaims);
 
+                Log::info('Customer ' . $customer->name . ' logged in');
+
                 // trả response json => client
                 return response()->json([
                     'message' => 'Đăng nhập thành công',
                     'jwt_token' => $jwt_token,
-                    'id_admin' => $customer->id,
+                    'cus_id' => $customer->id,
                     'exp' => now()->addMinutes(config('jwt.ttl'))->timestamp
                 ], 200);
             }

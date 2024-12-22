@@ -13,15 +13,15 @@ export const AboutUs = ({aboutRef, nextSection}) => {
 
             <div className="wrap-header-content">
                 <div className="about-us-img">
-                    <img src="public\image.png" alt="" />
+                    <img src="src/assets/img/avt.png" alt="" />
                 </div>
 
                 <div className="about-us-content">
                     <div className="wrap-about-us-text">
-                        <h1>Xin chào, chúng tôi là <span>LTN</span></h1>
+                        <h1>Xin chào, tôi là <span>Santo</span></h1>
                         <h3>Sinh viên tại <span>VKU</span></h3>
-                        <p>Đây là một dự án về Website Coffee & Tea mà chúng tôi thực hiện. 
-                        Website cung cấp thông tin về các loại đồ uống, chia sẻ kiến thức pha chế và kết nối cộng đồng yêu thích Coffee & Tea.</p>
+                        <p>Đây là một dự án web về chủ đề Cá và Thủy sinh mà tôi thực hiện. 
+                            Website cung cấp thông tin về các dòng cá cảnh và cây thủy sinh, chia sẻ kiến thức để phát triển cộng đồng thủy sinh.</p>
                         <div className="social-icons">
                             <Link href=""><FontAwesomeIcon icon={faFacebook} /></Link>
                             <Link href=""><FontAwesomeIcon icon={faInstagram} /></Link>

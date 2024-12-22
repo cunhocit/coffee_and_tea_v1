@@ -23,8 +23,9 @@ return new class extends Migration
             $table->integer('balance')->default(0);
             $table->string('image')->nullable();
             $table->integer('verify')->nullable();
-            $table->integer('verify_at')->nullable();
+            $table->string('verify_at')->nullable();
             $table->string('status')->nullable();
+            $table->string('voucher_code')->nullable();
             $table->timestamps();
         });
     }

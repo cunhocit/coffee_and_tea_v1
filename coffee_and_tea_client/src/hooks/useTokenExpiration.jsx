@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { useEffect } from "react"
 
 export const useTokenExpiration = () => {
     useEffect(() => {
-        if (localStorage.getItem('exp') && localStorage.getItem('jwt_token_customer')) {
+        if (localStorage.getItem('exp_customers') && localStorage.getItem('jwt_token_customer')) {
             const checkExpiration = () => {
-                const exp = parseInt(localStorage.getItem('exp'));
+                const exp = parseInt(localStorage.getItem('exp_customers'));
 
                 const currentTime = Math.floor(Date.now() / 1000);
                 

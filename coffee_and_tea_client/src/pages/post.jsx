@@ -4,6 +4,7 @@ import Footer from "../components/footer"
 import { PostLayout } from "../layouts/post/post_"
 
 export const Post = () => {
+
     return (
         <>
             <HelmetProvider>

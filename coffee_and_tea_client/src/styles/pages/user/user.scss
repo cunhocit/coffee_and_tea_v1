@@ -74,10 +74,12 @@
 
             @include respond(tablet) {
                 left: -100%;
+                top: 18%;
                 position: absolute;
             }
             @include respond(phone) {
                 left: -100%;
+                top: 18%;
                 position: absolute;
             }
 
@@ -93,21 +95,23 @@
                 width: 100%;
 
                 img {
-                    width: 50px;
-                    height: 50px;
+                    width: 60px;
+                    height: 60px;
                     border-radius: 100%;
                     border: 1px solid black;
+                    object-fit: cover;
                 }
 
                 div {
-                    width: 100%;
+                    width: auto;
                     height: 100%;
                     display: flex;
                     flex-direction: column;
                     padding: 0.2rem;
                     
                     p {
-                        font-size: 1.1rem;
+                        font-weight: 600px;
+                        font-size: 1.2rem;
                     }
 
                     .-change-avatar {

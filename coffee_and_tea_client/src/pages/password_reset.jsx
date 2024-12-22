@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLeaf, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLeaf } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -30,7 +30,7 @@ export default function PassowrdReset() {
             <div className="wrap-form-login" >
                 <div className="login-box">
                     <h1>Quên mật khẩu
-                        <FontAwesomeIcon icon={faCoffee} />
+                        <FontAwesomeIcon icon={faLeaf} />
                     </h1>
 
                     <div className="input-box">

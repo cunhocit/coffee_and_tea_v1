@@ -1,16 +1,16 @@
 export function optionPrice() {
     return[
-        {value: "all", label: 'Tất cả'},
-        {value: "low_to_high", label: 'Thấp đến Cao'},
-        {value: "high_to_low", label: 'Cao đến Thấp'}
+        {value: "all-price", label: 'Tất cả'},
+        {value: "asc-price", label: 'Thấp đến Cao'},
+        {value: "desc-price", label: 'Cao đến Thấp'}
     ];
 }
 
 export function optionSale() {
     return[
-        {value: "all", label: 'Tất cả'},
-        {value: "yes", label: 'Khuyến mãi'},
-        {value: "no", label: 'Không có'}
+        {value: "sale-not-sale", label: 'Tất cả'},
+        {value: "sale", label: 'Khuyến mãi'},
+        {value: "not-sale", label: 'Không có'}
     ];
 }
 

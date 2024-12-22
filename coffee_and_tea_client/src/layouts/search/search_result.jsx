@@ -1,14 +1,23 @@
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { faCartShopping, faClose, faCoffee, faFilter} from "@fortawesome/free-solid-svg-icons"
+import { faCartShopping, faClose, faFilter, faTags, faX } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { optionAddressProvin } from "../../components/select"
 
 import Select from 'react-select';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const SearchResult = ({openFilter, handleOpenFilter}) => {
+export const SearchResult = ({openFilter, handleOpenFilter, products, categories, 
+    unfilteredData, dataResults, setDataResults}) => {
+
     const filterRef = useRef(null);
+    const navigate = useNavigate();
+    const [selectedCat, setSelectedCat] = useState([]);
+    const [startPrice, setStartPrice] = useState('');
+    const [endPrice, setEndPrice] = useState('');
     
     const handleClickOutside = (event) => {
         if (filterRef.current && !filterRef.current.contains(event.target)) {
@@ -26,8 +35,70 @@ export const SearchResult = ({openFilter, handleOpenFilter}) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [openFilter])
+    }, [openFilter]);
 
+    useEffect(() => {
+        console.log('cat: ', selectedCat);
+    }, [selectedCat]);
+
+    const linkToProductDetails = (id) => {
+        if (!localStorage.getItem('jwt_token_customer')) {
+            alert('Vui lòng đăng nhập để xem chi tiết sản phẩm');
+            return;
+        }
+        navigate(`/product/${id}`);
+    }
+    
+    const getDayExpriedSale = (date) => {
+        const today = new Date().getTime();
+        const end_date = new Date(date).getTime();
+        const diffTime = end_date - today;
+        const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        return days;
+    }
+
+    const handleChooseCat = (cat) => {
+        if (!selectedCat?.some(c => c.id === cat.id)) {
+            setSelectedCat([...selectedCat, cat]);
+        }else {
+            setSelectedCat(prev => {
+                const newList = prev.filter(c => c.id != cat.id)
+                return newList;
+            });
+        }
+    }
+
+    const handleFilterAccept = () => {
+        let filteredData = [...unfilteredData];
+
+        // Lọc theo danh mục (selectedCat)
+        if (selectedCat.length > 0) {
+            filteredData = filteredData.filter((product) => 
+                selectedCat.some((cat) => cat.category === product.category)
+            );
+        }
+
+        // Lọc theo khoảng giá
+        if (startPrice) {
+            filteredData = filteredData.filter((product) => 
+                (product?.discount_percentage ? product?.price * (1 - product?.discount_percentage/100) : 
+                product?.price) >= parseFloat(startPrice));
+        }
+        if (endPrice) {
+            filteredData = filteredData.filter((product) => 
+                (product?.discount_percentage ? product?.price * (1 - product?.discount_percentage/100) : 
+                product?.price) <= parseFloat(endPrice));
+        }
+        setDataResults(filteredData);
+    }
+
+    const handleDelteCondition = () => {
+        setDataResults(unfilteredData);
+        setSelectedCat([]);
+        setEndPrice('');
+        setStartPrice('');
+    }
+ 
     return (
         <>
             <section className="wrap-show-product">
@@ -37,8 +108,8 @@ export const SearchResult = ({openFilter, handleOpenFilter}) => {
                     <div className={`wrap-filter-box ${openFilter ? 'open' : ''}`} ref={filterRef}>
                         <div className="box-fillter-component">
                             <div>
-                                <FontAwesomeIcon icon={faCoffee} />
-                                <h3>Bộ lọc tìm kiếm</h3>
+                                <FontAwesomeIcon icon={faFilter} />
+                                <h4>Bộ lọc</h4>
                             </div>
                             <FontAwesomeIcon icon={faClose} style={{display: openFilter ? 'flex' : 'none'}}  onClick={handleOpenFilter}/>
                         </div>
@@ -48,173 +119,76 @@ export const SearchResult = ({openFilter, handleOpenFilter}) => {
                         <div className="box-filter-categoires">
                             <p>Danh mục</p>
                             <div>
-                                <label htmlFor="">
-                                    <input type="checkbox" value={''}/>
-                                    Cá cảnh
-                                </label>
-                                <label htmlFor="">
-                                    <input type="checkbox" value={'Cá cảnh'}/>
-                                    Cây thủy sinh
-                                </label>
-                                <label htmlFor="">
-                                    <input type="checkbox" value={'Cá cảnh'}/>
-                                    Khác
-                                </label>
+                                {categories?.map((cat) => (
+                                    <label key={cat.id}>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedCat.some((c) => c.id === cat.id)}
+                                            onChange={() => handleChooseCat(cat)}
+                                        />
+                                        {cat.category}
+                                    </label>
+                                ))}
                             </div>
                         </div>
-
-                        <hr />
-
-                        <div className="box-filter-categoires">
-                            <p>Hình thức vận chuyển</p>
-                            <div>
-                                <label htmlFor="">
-                                    <input type="checkbox" value={''}/>
-                                    Bình thường
-                                </label>
-                                <label htmlFor="">
-                                    <input type="checkbox" value={'Cá cảnh'}/>
-                                    Nhanh
-                                </label>
-                                <label htmlFor="">
-                                    <input type="checkbox" value={'Cá cảnh'}/>
-                                    Siêu nhanh
-                                </label>
-                            </div>
-                        </div>
-
                         <hr />
 
                         <div className="box-filter-price">
                             <p>Khoảng giá</p>
                             <div className="price-about-box">
-                                <input type="text" name="" id="" placeholder="Từ 0đ"/>
+                                <input type="text" name="" id="" placeholder="Từ 0đ"
+                                    value={startPrice}
+                                    onChange={e => setStartPrice(e.target.value)}
+                                />
                                 <p>đến</p>
-                                <input type="text" name="" id="" placeholder="đến Xđ"/>
+                                <input type="text" name="" id="" placeholder="đến Xđ"
+                                    value={endPrice}
+                                    onChange={e => setEndPrice(e.target.value)}
+                                />
                             </div>
                         </div>
 
                         <hr />
 
-                        <button>Áp dụng</button>
+                        <button onClick={handleFilterAccept}>Áp dụng</button>
 
-                        <button>Xóa tất cả</button>
+                        <button onClick={handleDelteCondition}>Xóa tất cả</button>
 
                     </div>
 
                     <div className="wrap-list-product-p">
                         <div className="wrap-list-product">
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="https://th.bing.com/th/id/R.a9496a5e138c895e6682f1c2f812e842?rik=H8riI1IinaPhQw&riu=http%3a%2f%2fbettasales.net%2fwp-content%2fuploads%2f2017%2f04%2f11009874_460640844116386_2597940959999715225_n.jpg&ehk=VcSgtX5s2ruFrAkNHy9lEOBfeZSU3HqTAKec8zJvtZQ%3d&risl=&pid=ImgRaw&r=0" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Beta lavender</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
+                            {products?.map(p => (
+                                <div className="-w-list-product-item" key={p.id} onClick={(e) => linkToProductDetails(p.id)}>
+                                    <div className="box-product">
+                                        <img className="img-product" src={`http://127.0.0.1:8000/storage/products/${p?.image ? p?.image : 'image.png'}`} alt="" />
+                                        <div className="info-product">
+                                            <p className="name-product">{p?.name}</p>
+                                            {p?.discount_percentage && (
+                                                <div className="down-price-product">
+                                                    <FontAwesomeIcon icon={faTags} />
+                                                    <p>-{p?.discount_percentage}%</p>
+                                                    <p><s>{p?.price}<u>đ</u></s></p>
+                                                </div>)
+                                            }
+                                            <div className="price-product">
+                                                <p>{(p?.discount_percentage ? 
+                                                    p?.price*(1 - p?.discount_percentage/100) : p?.price).toLocaleString('vi-VN')}
+                                                <u>đ</u>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
+                                        <div className="-add-cart-shop">
+                                            <FontAwesomeIcon icon={faCartShopping}/>
+                                        </div>
+                                        {p?.discount_percentage && (
+                                            <div className="-add-flash-sale">
+                                                Còn {getDayExpriedSale(p?.end_date)} ngày
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="/src/assets/img/slide_image/image2.png" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Combo cá beta</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
-                                        </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="/src/assets/img/slide_image/image2.png" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Combo cá beta</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
-                                        </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="/src/assets/img/slide_image/image2.png" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Combo cá beta</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
-                                        </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="/src/assets/img/slide_image/image2.png" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Combo cá beta</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
-                                        </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="/src/assets/img/slide_image/image2.png" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Combo cá beta</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
-                                        </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="-w-list-product-item">
-                                <div className="box-product">
-                                    <img className="img-product" src="/src/assets/img/slide_image/image2.png" alt="" />
-                                    <div className="info-product">
-                                        <p className="name-product">Combo cá beta</p>
-                                        
-                                        <div className="price-product">
-                                            <p>99.000<u>đ</u></p>
-                                        </div>
-                                    </div>
-                                    <div className="-add-cart-shop">
-                                        <FontAwesomeIcon icon={faCartShopping}/>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
 
                         {/* <div className="explore-btn"><p>Xem thêm</p></div> */}

@@ -39,7 +39,7 @@ const ShowPrd = () => {
   };
 
   const filteredData = products.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())&&
+    item.name && item.name.toLowerCase().includes(search.toLowerCase())&&
     categoryFilter === 'Tất cả' || item.category === categoryFilter
   );
 
@@ -139,7 +139,7 @@ const ShowPrd = () => {
       width: "80px",
     },
   ];
-
+  
   return (
     <>
       <div className="wrap-table-prod" >
@@ -192,7 +192,7 @@ const ShowPrd = () => {
       </div>
 
       <div  style={{display: zoomImg ? 'flex' : 'none'}}  className="-prd-show-mage" onClick={handleZoom}>
-        <img src={`http://127.0.0.1:8000/api/products/images/${image}`} />
+        <img src={`http://127.0.0.1:8000/storage/products/${image}`} />
       </div>
     </>
   );

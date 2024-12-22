@@ -34,7 +34,6 @@ export default function SettingsLayout() {
             phone: admin.phone,
         }
         if (adminUpadeValid(admin_)) {
-            
             await updateAdmin(admin);
             handleUnlockDisabled();
         }

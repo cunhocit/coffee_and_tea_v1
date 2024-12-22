@@ -2,7 +2,7 @@ const initDraggable = () => {
     const draggable = document.getElementById("cart-shopping");
 
     if (draggable) {
-        draggable.style.position = "absolute";
+        draggable.style.position = "fixed";
         draggable.style.left = "92%";
         draggable.style.top = "20%";
 

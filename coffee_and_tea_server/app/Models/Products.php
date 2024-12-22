@@ -18,5 +18,8 @@ class Products extends Model
         'description',
         'quantity',
         'price',
+        'discount_percentage',
+        'end_date',
+        'turn_order',
     ];
 }

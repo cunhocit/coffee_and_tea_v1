@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customers;
 use App\Models\History;
+use App\Security\CryptAES;
 use App\Valid\AuthValid;
+use Illuminate\Support\Facades\Log;
 
 class CustomerController extends Controller
 {
@@ -103,7 +105,8 @@ class CustomerController extends Controller
 
     public function getCustomerById(Request $request) {
         try {
-            $customer = Customers::where('id', $request->input('id'))->first();
+            $id_ = $request->input('id');
+            $customer = Customers::where('id', $id_)->first();
             return response()->json([
                 'data' => $customer
             ], 200);
@@ -129,5 +132,36 @@ class CustomerController extends Controller
             ]);
         }
     }
+
+
+    public function changePasswordCustomer(Request $request) {
+        try {
+            Log::info($request->all());
+            $customer = Customers::where('id', CryptAES::decryptAES($request->input('id')))->first();
+
+            $password = $request->input('password');
+            $new_password = $request->input('new_password');
+
+            if ($customer && $password && $new_password
+                && $password === $customer->password
+            ){
+                $customer->password = $new_password;
+                $customer->save();
+
+                return response()->json([
+                    'message' => 'Đổi mật khẩu thành công'
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Mật khẩu không chính xác'
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Lỗi: ' . $e->getMessage()
+            ]);
+        }
+    }
+
 
 }

@@ -23,8 +23,6 @@ return new class extends Migration
             $table->integer('price')->nullable();
             $table->string('pay_method')->nullable();
             $table->string('status')->nullable();
-            $table->string('discount_percentage')->nullable();
-            $table->string('end_date')->nullable();
             $table->timestamps();
         });
     }

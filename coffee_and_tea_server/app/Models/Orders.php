@@ -20,6 +20,8 @@ class Orders extends Model
         'quantity',
         'price',
         'pay_method',
+        'transport',
+        'discount_voucher',
         'status',
     ];
 }

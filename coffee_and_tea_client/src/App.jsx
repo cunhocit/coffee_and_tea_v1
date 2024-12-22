@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
+import { useTokenExpiration } from './hooks/useTokenExpiration';
 
 import './styles/main.scss';
 import Login from './pages/login';
@@ -16,7 +17,10 @@ import { User } from './pages/user/user_dashboard';
 import { UserChangePassword } from './pages/user/user_change_pass';
 import { UserOrders } from './pages/user/user_orders';
 import { UserDiposit } from './pages/user/user_diposit';
-import { useTokenExpiration } from './hooks/useTokenExpiration';
+import PrivateRoute from './PrivateRoute';
+import { UserVoucher } from './pages/user/user_voucher';
+
+// localStorage.clear()
 
 function App() {
   useTokenExpiration();
@@ -29,16 +33,19 @@ function App() {
 
         <Route exact path='/' element={<Home />} />
         <Route exact path='/store' element={<Store />}></Route>
-        <Route exact path='/search' element={<Search />}></Route>
-        <Route exact path='/product_detail/:id' element={<ProductDetail />}></Route>
-        <Route exact path='/payment' element={<Payment />}></Route>
-        {/* <Route exact path='/post' element={<Post />}></Route> */}
+        <Route exact path='/search/:search_name' element={<Search />}></Route>
+
+        <Route exact path='/product/:id' element={<PrivateRoute><ProductDetail /></PrivateRoute>} ></Route>
+        <Route exact path='/payment' element={<PrivateRoute><Payment /></PrivateRoute>}></Route>
+
+        <Route exact path='/post/:id' element={<Post />}></Route>
         <Route exact path='/contact' element={<Contact />}></Route>
         
-        <Route exact path='/user' element={<User />}></Route>
-        <Route exact path='/user_change_password' element={<UserChangePassword />}></Route>
-        <Route exact path='/user_orders' element={<UserOrders />}></Route>
-        <Route exact path='/user_diposit' element={<UserDiposit />}></Route>
+        <Route exact path='/user' element={<PrivateRoute><User /></PrivateRoute>}></Route>
+        <Route exact path='/user_change_password' element={<PrivateRoute><UserChangePassword /></PrivateRoute>}></Route>
+        <Route exact path='/user_orders' element={<PrivateRoute><UserOrders /></PrivateRoute>}></Route>
+        <Route exact path='/user_diposit' element={<PrivateRoute><UserDiposit /></PrivateRoute>}></Route>
+        <Route exact path='/user_voucher' element={<PrivateRoute><UserVoucher /></PrivateRoute>}></Route>
       </Routes>
     </Router>
   )

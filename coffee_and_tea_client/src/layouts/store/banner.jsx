@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,8 +9,26 @@ import 'swiper/css/pagination';
 import 'swiper/scss/effect-fade';
 import 'swiper/scss/effect-cards';
 import { Navigation, Autoplay, EffectCards } from 'swiper/modules';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export const Banner = () => {
+export const Banner = ({data}) => {
+    const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const sort_data = data?.products?.sort((a, b) => b.turn_order - a.turn_order);
+        setProducts(sort_data.slice(0, 10));
+    }, [data]);
+    
+    const linkToProductDetails = (id) => {
+        if (!localStorage.getItem('jwt_token_customer')) {
+            alert('Vui lòng đăng nhập để xem chi tiết sản phẩm');
+            return;
+        }
+        navigate(`/product/${id}`);
+    }
+
     return (
         <>
             <section className="body-store">
@@ -29,26 +49,26 @@ export const Banner = () => {
                             className="mySwiper swiper-header-poster"
                         >
                             <SwiperSlide className="swiper-slide-poster">
-                                <img src="src\assets\image\banner\image_1.png" alt="" />
+                                <img className="" src="src\assets\image\banner_1.png" alt="" />
                             </SwiperSlide>
 
                             <SwiperSlide className="swiper-slide-poster">
-                                <img src="src\assets\image\banner\image_2.png" alt="" />
+                                <img src="src\assets\image\banner_2.png" alt="" />
                             </SwiperSlide>
 
                             <SwiperSlide className="swiper-slide-poster">
-                                <img src="src\assets\image\banner\image_3.png" alt="" />
+                                <img src="src\assets\image\banner_3.png" alt="" />
                             </SwiperSlide>
 
                             <SwiperSlide className="swiper-slide-poster">
-                                <img src="src\assets\image\banner\image_4.png" alt="" />
+                                <img src="src\assets\image\banner_4.png" alt="" />
                             </SwiperSlide>
                         </Swiper>
                     </div>
 
                     <div className='wrap-directory'>
                         <div className="-directory">
-                            <h1 className="directory-title">Sản phẩm bán chạy nhất</h1>
+                            <h1 className="directory-title">DANH MỤC NỔI BẬT</h1>
                             <Swiper
                                 centeredSlides={true}
                                 grabCursor={true}
@@ -79,45 +99,12 @@ export const Banner = () => {
                                 modules={[Autoplay]}
                                 className="mySwiper swiper-directory"
                             >
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="src\assets\image\6_1734193359.jpeg" alt="" />
-                                    <p>Cá betta</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/cavang.png" alt="" />
-                                    <p>Cá vàng</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/tepcanh.png" alt="" />
-                                    <p>Tép cảnh</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/luathuysinh.png" alt="" />
-                                    <p>Lũa thủy sinh</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/phannen.png" alt="" />
-                                    <p>Phân nền thủy sinh</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/maylocnuoc.png" alt="" />
-                                    <p>Bộ lọc nước</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/denchieu.png" alt="" />
-                                    <p>Đèn chiếu thủy sinh</p>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="swiper-slide-directory">
-                                    <img src="/src/assets/img/store_poster/vatlieuloc.png" alt="" />
-                                    <p>Vật liệu lọc</p>
-                                </SwiperSlide>
+                                {products?.map(p => (
+                                    <SwiperSlide key={p.name} className="swiper-slide-directory" onClick={() => linkToProductDetails(p.id)}>
+                                        <img src={`http://127.0.0.1:8000/storage/products/${p?.image}`} alt="" />
+                                        <p>{p.name}</p>
+                                    </SwiperSlide>
+                                ))}
                             </Swiper>
                         </div>
                     </div>

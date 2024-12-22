@@ -23,12 +23,12 @@ export default function Header({handleOpenSB}) {
     if (isLoading) return <div>Đang tải...</div>   
     
     const filterData1 = products?.filter((item) => 
-        item.name.toLowerCase().includes(search.toLowerCase())
-    )
-
+        item.name && item.name.toLowerCase().includes(search.toLowerCase())
+    );
+    
     const filterData2 = customers?.filter((item) => 
-        item.name.toLowerCase().includes(search.toLowerCase())
-    )
+        item.name && item.name.toLowerCase().includes(search.toLowerCase())
+    );    
     
     return (
         <>

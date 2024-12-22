@@ -71,8 +71,8 @@
                 @include flex-row-center-center;
 
                 img {
-                    width: 120px;
-                    height: 120px;
+                    width: 150px;
+                    height: 150px;
                     object-fit: cover;
                     border: 1px solid rgba(0, 0, 0, 0.619);
                     cursor: pointer;
@@ -84,25 +84,68 @@
                     flex-direction: column;
                     justify-content: space-between;
                     align-items: start;
-                    height: 120px;
-                    width: 100%;
+                    height: auto;
+                    gap: 0.2rem;
+                    width: 50%;
+
+                    @include respond(phone) {
+                        width: 100%;
+                    }
+                    @include respond(tablet) {
+                        width: 100%;
+                    }
+
+                    .-cart-name {
+                        height: 100%;
+                        width: 100%;
+                        padding: 1rem 0;
+                    }
+
+                    div {
+                        width: 100%;
+                        padding: 0.2rem;
+                        border-radius: 2px;
+                        cursor: pointer;
+                        background-color: rgb(52, 163, 0);
+                        color: white;
+                        text-align: center;
+                    }
+                    
+                    p {
+                        width: 100%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
 
                     label {
                         display: flex;
                         gap: 0.5rem;
                         align-items: center;
+                        justify-content: center;
 
-                        input {
-                            outline: none;
-                            border: none;
-                            border-bottom: 1px solid rgba(128, 128, 128, 0.503);
-                            width: 80px;
-                            padding: 0.3rem;
+                        p {
+                            width: 30px;
+                            height: 30px;
+                            text-align: center;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        div {
+                            background-color:  transparent;
+                            color: black;
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 5px;
+                            border: 1px solid grey;
                         }
                     }
 
                     .-cart-info-item {
                         font-size: 0.8rem;
+                        font-weight: 500;
                     }
                 }
             }
@@ -114,9 +157,13 @@
             text-align: center;
             padding: 0.5rem;
             border-radius: 5px;
-            background-color: rgba(40, 40, 40, 0.8);
-            border: none;
+            background-color: green;
+            border: 2px solid green;
             transition: 0.5s;
+        }
+        a:hover {
+            color: yellow;
+            font-weight: bold;
         }
     }
 

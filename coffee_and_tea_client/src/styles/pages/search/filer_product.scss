@@ -12,25 +12,22 @@
     align-items: start;
     gap: 1rem;
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    width: 20%;
 
     @include respond(tablet) {
         position: absolute;
         width: 25%;
         left: -100%;
-        top: 18%;
     }
 
     @include respond(phone) {
         position: absolute;
         width: 25%;
         left: -100%;
-        top: 18%;
     }
     
     button {
         width: 100%;
-        background-color: rgb(59, 57, 57);
+        background-color: green;
         outline: none;
         padding: 0.5rem;
         color: white;
@@ -52,7 +49,7 @@
         width: 100%;
         height: 100%;
         left: 0;
-        top: 18%;
+        top: 0;
     }
 }
 
@@ -66,7 +63,8 @@
 
     div {
         width: 100%;
-        @include flex-row-center-center;
+        display: flex;
+        align-items: center;
         gap: 0.5rem;
     }
 }

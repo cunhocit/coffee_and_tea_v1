@@ -36,7 +36,7 @@
     width: 450px;
     height: 450px;
     border-radius: 100%;
-    box-shadow: 0 15px 30px rgb(54, 54, 54);
+    box-shadow: 0 15px 30px rgba(29, 251, 0, 0.432);
     transition: 0.3s;
     cursor: pointer;
 
@@ -52,7 +52,7 @@
 }
 
 .about-us-img img:hover {
-    box-shadow: 0 15px 30px rgba(149, 149, 149, 0.9);
+    box-shadow: 0 15px 30px rgba(251, 134, 0, 0.432);
 }
 
 .about-us-content {
@@ -105,7 +105,7 @@
 }
 
 .wrap-about-us-text span {
-    color: rgb(97, 134, 207);
+    color: rgb(0, 216, 83);
 }
 
 .social-icons {
@@ -124,7 +124,7 @@
 .social-icons svg {
     width: 1.5rem;
     height: 1.5rem;
-    color: rgb(97, 134, 207);
+    color: rgb(0, 169, 11);
     transition: 0.2s;
 
     @include respond(tablet) {
@@ -138,7 +138,7 @@
 }
 
 .social-icons svg:hover {
-    color: rgba(241, 71, 20, 0.9);
+    color: rgba(255, 145, 0, 0.9);
     width: 1.7rem;
     height: 1.7rem;
 }
@@ -154,12 +154,11 @@
 }
 
 .about-us-next a {
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.462);
     padding: 0.8rem 1.5rem;
     border-radius: 50px;
     cursor: pointer;
     transition: 0.3s;
-    border: 2px solid white;
 
     @include respond(phone) {
         font-size: 0.8rem;
@@ -167,7 +166,6 @@
 }
 
 .about-us-next a:hover {
-    background-color: transparent;
-    color: white;
+    background-color: rgba(255, 145, 0, 0.6);
 }
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('type_code');
             $table->string('end_date');
+            $table->string('customer_claims');
             $table->timestamps();
         });
     }

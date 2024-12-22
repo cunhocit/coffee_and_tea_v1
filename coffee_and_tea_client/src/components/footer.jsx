@@ -12,11 +12,11 @@ export default function Footer() {
                             <img className=" footer-item wrap-logo-footer" src="/image.png" alt="logo" />
                     
                             <ul className="footer-item">
-                                <li><h2>Liên kết</h2></li>
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Cửa hàng</a></li>
-                                <li><a href="#">Cá nhân</a></li>
-                                <li><a href="#">Đơn hàng</a></li>
+                                <li><h2>Cửa hàng</h2></li>
+                                <li><a href="#">Cá cảnh</a></li>
+                                <li><a href="#">Cây thủy sinh</a></li>
+                                <li><a href="#">Thức ăn cho cá</a></li>
+                                <li><a href="#">Khác</a></li>
                             </ul>
 
                             <ul className="footer-item">

@@ -1,16 +1,22 @@
+/* eslint-disable no-unused-vars */
 import { Helmet, HelmetProvider } from "react-helmet-async"
-import {useParams} from 'react-router-dom'
 import NavigationBar from "../components/navigation"
 import Footer from "../components/footer"
 import { ProducInfo } from "../layouts/product_detail/product_info"
 import { Comment } from "../layouts/product_detail/comment"
 import { ProductRelated } from "../layouts/product_detail/product_related"
 import { ShoppingCartFinal } from "../components/shopping_cart_final"
-import { useProducts } from "../hooks/useProduct";
+import { useParams } from "react-router-dom"
+import { useGetProductDetailById } from "../hooks/useProduct"
+import { CartProvider } from "../components/cart_contetn"
+import { useEffect } from "react"
 
 export const ProductDetail = () => {
     const {id} = useParams();
-    const {data, isLoading} = useProducts();
+    const {data, fetchData, isLoading, data2, fetchData2, fetchData3, products} = useGetProductDetailById(id);
+
+    if (isLoading) return <></>
+    
     return (
         <>
             <HelmetProvider>
@@ -20,17 +26,19 @@ export const ProductDetail = () => {
                     <NavigationBar/>
                 </section>
 
-                <ShoppingCartFinal/>
+                <CartProvider>
+                    <ShoppingCartFinal/>
 
-                <div className="wrap-product-detail-page">
+                    <div className="wrap-product-detail-page">
 
-                    <ProducInfo data={data} isLoading={isLoading} id={id}/>
+                        <ProducInfo product={data} data2={data2} />
 
-                    <Comment />
+                        <Comment data2={data2} id={id}/>
 
-                    <ProductRelated />
+                        <ProductRelated products={products} />
 
-                </div>
+                    </div>
+                </CartProvider>
                 
                 <Footer/>
 

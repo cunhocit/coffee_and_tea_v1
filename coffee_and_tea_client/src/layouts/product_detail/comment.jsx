@@ -1,7 +1,31 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { faComment } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect, useState } from "react";
+import { addNewComment } from "../../app/api/comment";
 
-export const Comment = () => {
+export const Comment = ({data2, id}) => {
+    const [comments, setComments] = useState();
+    const [customers, setCustomers] = useState();
+    const [newComment, setNewComment] = useState('');
+
+    useEffect(() => {
+        const sort_ = data2?.comments?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setComments(sort_);
+        setCustomers(data2?.customers);
+    }, [data2]);
+
+    const handleComment = async () => {
+        if (!newComment) {
+            alert("Bạn chưa đánh giá!")
+            return;
+        }
+        await addNewComment(newComment, id);
+        window.location.reload();
+    }
+
     return (
         <>
             <div className="wrap-comment">
@@ -12,52 +36,27 @@ export const Comment = () => {
                 <hr />
                 <div className="-w-your-comment">
                     <div>
-                        <textarea type="text" />
-                        <button>Gửi</button>
+                        <textarea type="text" 
+                            value={newComment}
+                            onChange={ e => setNewComment(e.target.value) }
+                        />
+                        <button onClick={handleComment}>Gửi</button>
                     </div>
                 </div>
-                <div className="-around-comment">
-                    <div className="-wrap-object-comment">
-                        <img src="src\assets\img\slide_image\image4.png" alt="" />
-                        <div>
-                            <h3>Name</h3>
-                            <p className="-time-comment">12/01/2024</p>
-                            <p className="-comment-content">Cá đẹp, giống như hình</p>
-                        </div>
+                {comments?.length > 0 ? (
+                    <div className="-around-comment">
+                        {comments?.map( c => (
+                            <div className="-wrap-object-comment" key={c.id}>
+                                <img src={`http://127.0.0.1:8000/storage/customers/${customers?.find(p => p.id === c.cus_id)?.image ? customers?.find(p => p.id === c.cus_id)?.image : 'image.png'}`} alt="" />
+                                <div>
+                                    <h3>{customers?.find(p => p.id === c.cus_id).name}</h3>
+                                    <p className="-time-comment">{new Date(c.created_at).toLocaleDateString()}</p>
+                                    <p className="-comment-content">{c.comment}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    <div className="-wrap-object-comment">
-                        <img src="src\assets\img\slide_image\image4.png" alt="" />
-                        <div>
-                            <h3>Name</h3>
-                            <p className="-time-comment">12/01/2024</p>
-                            <p className="-comment-content">Cá đẹp, giống như hình</p>
-                        </div>
-                    </div>
-                    <div className="-wrap-object-comment">
-                        <img src="src\assets\img\slide_image\image4.png" alt="" />
-                        <div>
-                            <h3>Name</h3>
-                            <p className="-time-comment">12/01/2024</p>
-                            <p className="-comment-content">Cá đẹp, giống như hình</p>
-                        </div>
-                    </div>
-                    <div className="-wrap-object-comment">
-                        <img src="src\assets\img\slide_image\image4.png" alt="" />
-                        <div>
-                            <h3>Name</h3>
-                            <p className="-time-comment">12/01/2024</p>
-                            <p className="-comment-content">Cá đẹp, giống như hình</p>
-                        </div>
-                    </div>
-                    <div className="-wrap-object-comment">
-                        <img src="src\assets\img\slide_image\image4.png" alt="" />
-                        <div>
-                            <h3>Name</h3>
-                            <p className="-time-comment">12/01/2024</p>
-                            <p className="-comment-content">Cá đẹp, giống như hình</p>
-                        </div>
-                    </div>
-                </div>
+                ) : 'Không có bình luận nào'}
             </div>
         </>
     )

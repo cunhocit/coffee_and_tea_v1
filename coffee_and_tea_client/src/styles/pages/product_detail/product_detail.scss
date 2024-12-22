@@ -63,10 +63,25 @@
         }
 
         .-detail-price {
-            padding: 1rem;
             width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
             color: rgb(0, 129, 0);
             background-color: rgba(189, 189, 189, 0.14);
+
+            h2 {
+                color: rgb(253, 26, 26);
+            }
+            
+            div {
+                display: flex;
+                justify-content: left;
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+            }
         }
 
         .-detail-controll {
@@ -76,7 +91,7 @@
 
             button {
                 width: 100%;
-                background-color: rgb(43, 45, 43);
+                background-color: green;
                 padding: 1rem;
                 color: white;
                 border: none;
@@ -84,10 +99,9 @@
                 font-weight: bold;
                 transition: 0.5s;
                 font-size: 1.1rem;
-                border-radius: 2px;
             }
             button:hover {
-                background-color: rgb(87, 85, 85);
+                background-color: rgb(208, 109, 22);
             }
         }
 

@@ -5,7 +5,7 @@
     height: auto;
     display: flex;
     justify-content: center;
-    background-image: url('src/assets/image/background/bg_2.png');
+    background-image: url('src/assets/img/image8.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -54,14 +54,6 @@
 
             p {
                 font-size: 1.2rem;
-                padding: 0 1rem;
-
-                @include respond(tablet) {
-                    padding: 0;
-                }
-                @include respond(phone) {
-                    padding: 0;
-                }
             }
         }
 
@@ -111,6 +103,15 @@
                         padding: 0.5rem;
                         background: transparent;
                         border-radius: 5px;
+                    }
+
+                    textarea {
+                        outline: none;
+                        padding: 0.5rem;
+                        border: 1px solid rgba(128, 128, 128, 0.511);
+                        background: transparent;
+                        border-radius: 5px;
+                        height: 190px;
                     }
                 }
 

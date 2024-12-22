@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('price');
             $table->string('pay_method')->nullable();
             $table->string('status')->nullable();
+            $table->string('transport')->nullable();
+            $table->string('discount_voucher')->nullable();
             $table->timestamps();
         });
     }

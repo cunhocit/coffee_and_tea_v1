@@ -14,7 +14,7 @@ export const Register_API = async (customer) => {
             'http://127.0.0.1:8000/api/customer_register',
             formData,
             {
-                headers: {
+                header: {
                     'Content-Type': 'multipart/form-data'
                 }
             }
@@ -33,7 +33,6 @@ export const Register_API = async (customer) => {
 
 export const Login_API = async (customer) => {
     try {
-
         const formData = new FormData();
         formData.append('email', encryptAES(customer.email));
         formData.append('password', hashPassword(customer.password));
@@ -43,7 +42,7 @@ export const Login_API = async (customer) => {
             formData,
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 }
             }
         );
@@ -58,7 +57,8 @@ export const Login_API = async (customer) => {
 
             localStorage.setItem('jwt_token_customer', jwt_token);
             localStorage.setItem('cus_id', cus_id);
-            localStorage.setItem('exp', exp);
+            localStorage.setItem('exp_customers', exp);
+            localStorage.setItem('shopping_cart', JSON.stringify([]));
             return true;
         }
 

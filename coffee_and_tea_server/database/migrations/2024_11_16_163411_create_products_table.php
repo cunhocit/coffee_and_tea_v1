@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('category')->nullable();
             $table->string('name')->nullable()->unique();
-            $table->string('image')->nullable();
+            $table->string('image')->unique()->nullable();
             $table->text('description')->nullable();
             $table->integer('quantity')->nullable();
             $table->integer('price')->nullable();
+            $table->double('discount_percentage')->unique()->nullable();
+            $table->string('end_date')->unique()->nullable();
+            $table->integer('turn_order')->nullable();
             $table->timestamps();
         });
     }

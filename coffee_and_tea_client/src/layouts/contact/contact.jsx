@@ -2,9 +2,11 @@
 import { faSuperpowers } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faLeaf, faPhone } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Link } from "react-router-dom";
+import emailjs from 'emailjs-com';
 
 const modules = {
     toolbar: [
@@ -24,6 +26,52 @@ const formats = [
 ];
 
 export const ContactLayout = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [subject, setSubject] = useState('');
+    const [status, setStatus] = useState(null);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!name || !email || !message) {
+            alert('Bạn chưa nhập đủ thông tin kìa.');
+            return;
+        }
+    
+        // Cấu hình tham số template gửi email
+        const templateParams = {
+            name: name,
+            email: email,
+            message: message,
+            subject: subject
+        };
+
+        console.log(templateParams);
+        
+    
+        // Gửi email qua EmailJS
+        emailjs
+          .send(
+            'service_4etgbuk', // Thay bằng ID dịch vụ của bạn
+            'template_zcanbt6', // Thay bằng ID mẫu của bạn
+            templateParams,
+            'R9jzDdRTVv52Pa61w', // pubic key
+          )
+          .then(
+            (response) => {
+              setStatus('Email sent successfully!');
+              console.log(response);
+            },
+            (error) => {
+              setStatus('Failed to send email');
+              console.log(error);
+            }
+          );
+      };
+
+
     return (
         <>
             <div className="-contact-content">
@@ -33,8 +81,8 @@ export const ContactLayout = () => {
                             Nếu bạn cần trợ giúp?
                         </h1>
                     </div>
-                    <p>Hãy liên hệ với chúng tôi để được tư vấn 24/7</p>
-                    <p>Rất vui lòng được giúp đỡ bạn!</p>
+                    <p>+ Hãy liên hệ với chúng tôi để được tư vấn 24/7</p>
+                    <p>+ Rất vui lòng được giúp đỡ bạn!</p>
                 </div>
 
                 <div className="-w-contact-right">
@@ -55,65 +103,41 @@ export const ContactLayout = () => {
                     <div className="-w-contact-content-mail">
                         <h4>Gửi tin nhắn</h4>
                         <label htmlFor="">
-                            Họ và tên
-                            <input type="text" name="" id="" />
+                            Tên
+                            <input type="text" name="" id="" 
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
                         </label>
                         
                         <label htmlFor="">
                             Email
-                            <input type="mail" name="" id="" />
+                            <input type="mail" name="" id="" 
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+
+                        <label htmlFor="">
+                            Tiêu đề
+                            <input type="text" name="" id="" 
+                                value={subject}
+                                onChange={(e) => setSubject(e.target.value)}
+                            />
                         </label>
 
                         <label htmlFor="">
                             Nội dung
-                            <ReactQuill
-                                className="custom-react-quill"
-                                modules={modules}
-                                formats={formats}
+                            <textarea name="" id="" 
+                                value={message}
+                                onChange={e => setMessage(e.target.value)}
                             />
                         </label>
 
-                        <button className="-w-send-button">Gửi tin</button>
+                        <button className="-w-send-button" onClick={handleSubmit}>Gửi tin</button>
                     </div>
                 </div>
             </div>
         </>
     )
 }
-
-{/* <div className="-contact-info">
-<h1>
-    Thông tin liên hệ
-</h1>
-<p>                        
-    <FontAwesomeIcon icon={faPhone} />
-    +84 354 337 115
-</p>
-<p>                        
-    <FontAwesomeIcon icon={faEnvelope} />
-    lethanhloi2202@gmail.com
-</p>
-
-<div className="-w-contact-info">
-    <label htmlFor="">
-        Họ và tên
-        <input type="text" name="" id="" />
-    </label>
-    
-    <label htmlFor="">
-        Email
-        <input type="mail" name="" id="" />
-    </label>
-</div>
-
-<label htmlFor="" className="">
-    Nội dung
-    <ReactQuill
-        className="custom-react-quill"
-        modules={modules}
-        formats={formats}
-    />
-</label>
-
-<button className="-w-send-button">Gửi</button>
-</div> */}

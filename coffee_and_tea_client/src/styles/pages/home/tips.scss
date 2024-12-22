@@ -10,7 +10,7 @@
 }
 
 .tips {
-    height: auto;
+    max-height: auto;
     min-height: 100dvh;
     display: flex;
     justify-content: start;
@@ -52,32 +52,51 @@
 
 .tips-ul li {
     @include flex-column-space-between-center;
-    width: 27%;
+    width: 25%;
     height: 50dvh;
     gap: 1.5rem;
 
     @include respond(phone) {
         width: 70%;
+        height: auto;
     }
-}
 
-.tips-img {
-    border-radius: 20px;
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    cursor: pointer;
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: start;
+        gap: 1rem;
+    }
+
+    img {
+        box-shadow: 0 10px 20px rgba(27, 27, 27, 0.3);
+        border-radius: 20px;
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        cursor: pointer;
+
+        @include respond(tablet){
+            height: 200px;
+        }
+    }
 }
 
 .tips-text {
     width: 100%;
+    min-height: 90px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.tips-text p {
+.tips-text h2 {
     color: rgb(52, 52, 52);
+
+    @include respond(tablet) {
+        font-size: 1.2rem;
+    }
 }
 
 .nextPage_btn {

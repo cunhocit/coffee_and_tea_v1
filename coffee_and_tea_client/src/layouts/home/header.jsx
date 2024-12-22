@@ -20,7 +20,7 @@ export const Header = ({scrollToAbout}) => {
             </div>
 
             <video autoPlay loop muted playsInline className="header-bg-video">
-                <source src="src/assets/video/video_1.mp4" type="video/mp4" />
+                <source src="src/assets/video/video_2.mp4" type="video/mp4" />
             </video>
         </section>
     </>

@@ -1,12 +1,26 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import { faBoxOpen, faCoins, faDollar, faGear, faHistory, faKey, faList, faSignOut, faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import { useGetCustomerById } from "../../hooks/useCustomer"
+import { useGetOrderById } from "../../hooks/useOrder"
+import { SideBarUser } from "./sidebar_user"
+import { DestroyOrderAPI } from "../../app/api/order_api"
 
 export const Orders = () => {
     const [openSideBar, setOpenSideBar] = useState(false);
     const sideBarRef = useRef(null);
+    const {data, fetchData, isLoading} = useGetOrderById();
+    const {data: customer, fetchData: fetchCustomer, isLoading: isLoadingCustomer} = useGetCustomerById();
+    const [orderList, setOrderList] = useState();
+
+    useEffect(() => {
+        console.log('data', data);
+        const sort_ = data?.order?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setOrderList(sort_);
+    }, [data]);
 
     const handleOpenSideBar = () => setOpenSideBar(prev => !prev);
 
@@ -26,35 +40,20 @@ export const Orders = () => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [openSideBar])
+    }, [openSideBar]);
 
+    if (isLoading && isLoadingCustomer) return <></>
+
+    const handleDestroyOrder = async (id) => {
+        await DestroyOrderAPI(id);
+        fetchData();
+    }
 
     return (
         <>
             <div className="wrap-dashboard" ref={sideBarRef}>
 
-                <div className={`-dashboard-sidebar ${openSideBar ? 'open' : ''}`} ref={sideBarRef}>
-                    <div className="-avatar-box">
-                        <img src="src\assets\img\slide_image\image3.png" alt="" />
-                        <div>
-                            <p>Thanh loi</p>
-                            <p className="-change-avatar">Đổi avatar</p>
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    <div className="-sidebar-list">
-                        <ul>
-                            <li><FontAwesomeIcon icon={faCoins} />192.000đ</li>
-                            <li><Link to={'/user'}><FontAwesomeIcon icon={faUser} />Thông tin</Link></li>
-                            <li><Link to={'/user_orders'}><FontAwesomeIcon icon={faBoxOpen} />Đơn hàng</Link></li>
-                            <li><Link to={'/user_change_password'}><FontAwesomeIcon icon={faKey} />Đổi mật khẩu</Link></li>
-                            <li><Link to={'/user_diposit'}><FontAwesomeIcon icon={faDollar} />Nạp tiền</Link></li>
-                            <li><FontAwesomeIcon icon={faSignOut} />Đăng xuất</li>
-                        </ul>
-                    </div>
-                </div>
+                <SideBarUser openSideBar={openSideBar} sideBarRef={sideBarRef} customer={customer} />
 
                 <div className="-dashboard-space" ref={sideBarRef}>
                     <div className="wrap-user-info">
@@ -69,80 +68,38 @@ export const Orders = () => {
                         <div className="wrap-user-order">
                             <div className="-user-order-list">
 
-                                <div className="-user-order-item">
-                                    <img src="src\assets\img\slide_image\image2.png" alt="" />
-                                    <div className="-order-item-info">
-                                        <p>Cá chuột caffee</p>
-                                        <div className="-order-item-detail">
-                                            <div>
-                                                <p>Danh mục: cá cảnh</p>
-                                                <p>Đơn giá: 5.000đ</p>
-                                                <p>Số lượng: 7</p>
-                                                <p>Ngày đặt: 27/10/2024</p>
-                                            </div>
+                                {orderList?.map((order, index) => (
+                                    <div className="-user-order-item" key={index}>
+                                        <div className="-img-container"><img src={`http://127.0.0.1:8000/storage/products/${
+                                            data?.products?.find(p => p.name === order.product).image
+                                        }`} alt="" /></div>
+                                        <div className="-order-item-info">
+                                            <p>{order?.product}</p>
+                                            <div className="-order-item-detail">
+                                                <div>
+                                                    <p>Danh mục: {order?.category}</p>
+                                                    <p>Đơn giá: {data?.products?.find(p => p.name === order.product).price}</p>
+                                                    <p>Số lượng: {order?.quantity}</p>
+                                                    <p>Ngày đặt: {new Date(order?.created_at).toLocaleString()}</p>
+                                                </div>
 
-                                            <div>
-                                                Địa chỉ: 26 trần đại nghĩa
-                                                <p>Tình trạng: đang giao</p>
-                                            </div>
+                                                <div>
+                                                    Địa chỉ: {order?.address}
+                                                    <p>Tình trạng: {order?.status}</p>
+                                                </div>
 
-                                            <div>
-                                                <p><span>Thành tiền: 35.000đ</span></p>
-                                                <button>Hủy đơn</button>
+                                                <div>
+                                                    <p><span>Thành tiền: {order.price.toLocaleString('vi-VN')} đ</span></p>
+                                                    {
+                                                        (order?.status === 'Đã hủy' || order?.status === 'Đang chờ' || order?.status === 'Hoàn thành') 
+                                                        ? <span style={{ color: 'green' }}>{order?.status}</span> 
+                                                        : <button onClick={() => handleDestroyOrder(order?.id)}>Hủy đơn</button>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="-user-order-item">
-                                    <img src="src\assets\img\slide_image\image3.png" alt="" />
-                                    <div className="-order-item-info">
-                                        <p>Tảo đỏ</p>
-                                        <div className="-order-item-detail">
-                                            <div>
-                                                <p>Danh mục: cây thủy sinh</p>
-                                                <p>Đơn giá: 1.200đ</p>
-                                                <p>Số lượng: 2</p>
-                                                <p>Ngày đặt: 27/10/2024</p>
-                                            </div>
-
-                                            <div>
-                                                Địa chỉ: 26 trần đại nghĩa
-                                                <p>Tình trạng: đang giao</p>
-                                            </div>
-
-                                            <div>
-                                                <p><span>Thành tiền: 2.400đ</span></p>
-                                                <button>Hủy đơn</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="-user-order-item">
-                                    <img src="src\assets\img\slide_image\image1.png" alt="" />
-                                    <div className="-order-item-info">
-                                        <p>Cá lồng bàn</p>
-                                        <div className="-order-item-detail">
-                                            <div>
-                                                <p>Danh mục: cá cảnh</p>
-                                                <p>Đơn giá: 20.000đ</p>
-                                                <p>Số lượng: 1</p>
-                                                <p>Ngày đặt: 27/10/2024</p>
-                                            </div>
-
-                                            <div>
-                                                Địa chỉ: 26 trần đại nghĩa
-                                                <p>Tình trạng: đang giao</p>
-                                            </div>
-
-                                            <div>
-                                                <p><span>Thành tiền: 20.000đ</span></p>
-                                                <button>Hủy đơn</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
 
                             </div>
                         </div>
