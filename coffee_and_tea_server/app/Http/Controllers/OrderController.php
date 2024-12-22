@@ -35,6 +35,7 @@ class OrderController extends Controller {
             $order->product = $request->product;
             $order->quantity = $request->quantity;
             $order->pay_method = $request->pay_method;
+            $order->status = $request->status;
 
             // $order->status = $request->status;
             if ($request->status === 'Hoàn thành') {
