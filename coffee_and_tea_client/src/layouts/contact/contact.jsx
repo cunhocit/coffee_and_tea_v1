@@ -63,6 +63,13 @@ export const ContactLayout = () => {
             (response) => {
               setStatus('Email sent successfully!');
               console.log(response);
+              if (response.status === 200) {
+                setName('');
+                setEmail('');
+                setMessage('');
+                setSubject('');
+                alert('Email đã được gửi thành công!');
+            }
             },
             (error) => {
               setStatus('Failed to send email');
@@ -95,7 +102,7 @@ export const ContactLayout = () => {
                     </p>
                     <p>                        
                         <FontAwesomeIcon icon={faEnvelope} />
-                        lethanhloi2202@gmail.com
+                        zkakashi47@gmail.com
                     </p>
 
                     <hr />
