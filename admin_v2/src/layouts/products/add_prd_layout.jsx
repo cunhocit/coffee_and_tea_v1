@@ -93,7 +93,12 @@ export default function AddPrd() {
     formData.append('image', image);
 
     await addPrdAPI(formData);
-    window.location.reload();
+    setCategory(categories[0]?.category);
+    setName('');
+    setDescription('');
+    setPrice(0);
+    setImage('');
+    setURLImage('');
   }
   
   return (

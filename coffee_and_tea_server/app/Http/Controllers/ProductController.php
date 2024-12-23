@@ -80,13 +80,13 @@ class ProductController extends Controller
             $file = $request->file('image');
             $file_name = $product->id . '_' . time() . '.' . $file->getClientOriginalExtension();
 
-            $storage_path = public_path('storage/products');
+            $storage_path = storage_path('app/public/products');
 
             if (!file_exists($storage_path)) {
                 mkdir($storage_path, 0777, true);
             }
-            if ($product->image && file_exists(public_path('storage/products/' . $product->image))) {
-                unlink(public_path('storage/products/' . $product->image));
+            if ($product->image && file_exists(storage_path('app/public/products/' . $product->image))) {
+                unlink(storage_path('app/public/products/' . $product->image));
             }
             $file->move($storage_path, $file_name);
 
