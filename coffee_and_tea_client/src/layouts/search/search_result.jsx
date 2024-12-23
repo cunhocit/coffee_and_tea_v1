@@ -161,7 +161,7 @@ export const SearchResult = ({openFilter, handleOpenFilter, products, categories
                             {products?.map(p => (
                                 <div className="-w-list-product-item" key={p.id} onClick={(e) => linkToProductDetails(p.id)}>
                                     <div className="box-product">
-                                        <img className="img-product" src={`http://127.0.0.1:8000/storage/products/${p?.image ? p?.image : 'image.png'}`} alt="" />
+                                        <img className="img-product" src={`http://127.0.0.1:8000/api/products/images/${p?.image ? p?.image : 'image.png'}`} alt="" />
                                         <div className="info-product">
                                             <p className="name-product">{p?.name}</p>
                                             {p?.discount_percentage && (
