@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 // CartContext.js
 import { createContext, useState, useContext, useEffect } from 'react';
+import { useGetListProductsById } from '../hooks/useProduct';
 
 const CartContext = createContext();
 
@@ -10,6 +11,7 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
+    const {data, fetchData, isLoading} = useGetListProductsById();
     const [cart, setCart] = useState(0);
 
     useEffect(() => {
@@ -23,6 +25,7 @@ export const CartProvider = ({ children }) => {
             shoppingCart.push(id);
             localStorage.setItem('shopping_cart', JSON.stringify(shoppingCart));
             setCart(shoppingCart.length);
+            fetchData();
         }
     };
 
