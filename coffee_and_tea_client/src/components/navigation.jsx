@@ -91,7 +91,7 @@ export default function NavigationBar(){
                             <h4>{customer?.name}</h4>
                             <Link to={'/user'}>Thông tin cá nhân</Link>
                         </div>
-                        <img src={`http://127.0.0.1:8000/storage/customers/${customer?.image ? customer?.image : 'image.png'}`} alt="avatar"/>
+                        <img src={`http://127.0.0.1:8000/api/customers/images/${customer?.image ? customer?.image : 'image.png'}`} alt="avatar"/>
                     </li>
                 </ul>
 

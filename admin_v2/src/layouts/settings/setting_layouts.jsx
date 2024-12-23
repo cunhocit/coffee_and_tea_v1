@@ -51,7 +51,7 @@ export default function SettingsLayout() {
                 id: admin_id,
                 file: selectedFile
             });
-            window.location.reload();
+            fetchData();
         }
     }
 

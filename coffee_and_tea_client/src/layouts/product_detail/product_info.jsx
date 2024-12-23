@@ -33,7 +33,7 @@ export const ProducInfo = ({product, data2}) => {
     return (
         <>
             <div className="wrap-product-info">
-                <img src={`http://127.0.0.1:8000/storage/products/${product?.image ? product?.image : 'image.png'}`} alt="" />
+                <img src={`http://127.0.0.1:8000/api/products/images/${product?.image ? product?.image : 'image.png'}`} alt="" />
 
                 <div className="-detal-info">
                     <h4>Chi tiết sản phẩm</h4>

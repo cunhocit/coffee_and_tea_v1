@@ -119,7 +119,7 @@ export const ListOrder = () => {
                                             checked={selectedProducts.some((p) => p.id === product.id)}
                                             onClick={(e) => handleChooseProduct(product, e.target.checked)}
                                         />
-                                        <img src={`http://127.0.0.1:8000/storage/products/${product?.image}`} alt="" />
+                                        <img src={`http://127.0.0.1:8000/api/products/images/${product?.image}`} alt="" />
                                     </div>
                                     <div>
                                         <h4>{product?.name}</h4>

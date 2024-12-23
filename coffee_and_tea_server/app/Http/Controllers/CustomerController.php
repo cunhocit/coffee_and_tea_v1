@@ -80,13 +80,13 @@ class CustomerController extends Controller
             $file_name = $customer->id . '_' . $request->input('time') . '.' . $file->getClientOriginalExtension();
 
             // Tạo instance của Intervention Image
-            $storage_path = public_path('storage/customers');
+            $storage_path = storage_path('app/public/customers');
 
             if (!file_exists($storage_path)) {
                 mkdir($storage_path, 0777, true);
             }
-            if ($customer->image && file_exists(public_path('storage/customers/' . $customer->image))) {
-                unlink(public_path('storage/customers/' . $customer->image));
+            if ($customer->image && file_exists(storage_path('app/public/customers/' . $customer->image))) {
+                unlink(storage_path('app/public/customers/' . $customer->image));
             }
             $file->move($storage_path, $file_name);
 

@@ -94,7 +94,7 @@ const ShowPrd = () => {
       selector: (row) => row.image,
       sortable: true,
       cell: (row) => (
-        <img  src={`http://127.0.0.1:8000/storage/products/${row.image ? row.image : 'image.png'}`} 
+        <img  src={`http://127.0.0.1:8000/api/products/images/${row.image ? row.image : 'image.png'}`} 
               style={{
                 width: '100px',
                 height: '100px',

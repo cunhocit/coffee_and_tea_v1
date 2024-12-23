@@ -101,7 +101,7 @@ export const Banner = ({data}) => {
                             >
                                 {products?.map(p => (
                                     <SwiperSlide key={p.name} className="swiper-slide-directory" onClick={() => linkToProductDetails(p.id)}>
-                                        <img src={`http://127.0.0.1:8000/storage/products/${p?.image}`} alt="" />
+                                        <img src={`http://127.0.0.1:8000/api/products/images/${p?.image}`} alt="" />
                                         <p>{p.name}</p>
                                     </SwiperSlide>
                                 ))}

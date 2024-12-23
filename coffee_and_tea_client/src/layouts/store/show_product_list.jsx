@@ -86,7 +86,7 @@ export const ShowProductList = ({data}) => {
                         {currentProducts?.map((product, index) => (
                             <div className="-w-list-product-item" key={index} onClick={(e) => linkToProductDetails(product.id)}>
                                 <div className="box-product">
-                                    <img className="img-product" src={`http://127.0.0.1:8000/storage/products/${product?.image}`} />
+                                    <img className="img-product" src={`http://127.0.0.1:8000/api/products/images/${product?.image}`} />
                                     <div className="info-product">
                                         <p className="name-product">{product?.name}</p>
                                         {product?.discount_percentage && (

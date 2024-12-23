@@ -44,7 +44,7 @@ export const SlideShow = ({slideShowRef, nextSection}) => {
                     >
                         {data?.map( (e) => (
                             <SwiperSlide className="home-swiper-slide" key={e.id} >
-                                <img src={`http://127.0.0.1:8000/storage/products/${e?.image}`} alt="" />
+                                <img src={`http://127.0.0.1:8000/api/products/images/${e?.image}`} alt="" />
                             </SwiperSlide>
                         ))}
                     </Swiper>

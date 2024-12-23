@@ -88,7 +88,7 @@ export const FlashSale = ({data}) => {
                                 {product_sale?.map((product, index) => (
                                     <SwiperSlide className="swiper-slide-flash-sale" key={index}>
                                         <div className="box-product" onClick={() => linkToProductDetails(product.id)}>
-                                            <img className="img-product" src={`http://127.0.0.1:8000/storage/products/${product?.image}`} alt="" />
+                                            <img className="img-product" src={`http://127.0.0.1:8000/api/products/images/${product?.image}`} alt="" />
                                             <div className="info-product">
                                                 <p className="name-product">{product.name}</p>
                                                 <div className="down-price-product">

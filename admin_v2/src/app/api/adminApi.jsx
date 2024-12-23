@@ -56,7 +56,6 @@ export const updateAdmin = async (admin) => {
     }
 }
 
-
 export const updateAvatar = async (admin) => {
     try {
         const jwt_token = localStorage.getItem('jwt_token');

@@ -169,7 +169,7 @@ export default function OrderInfoLayout({id}) {
         
         <div className="wrap-right-add-prd">
             <h3>Hình ảnh sản phẩm</h3>
-            <img src={`http://127.0.0.1:8000/storage/products/${image}`} alt="" />
+            <img src={`http://127.0.0.1:8000/api/products/images/${image}`} alt="" />
         </div>
     </div>
     </>

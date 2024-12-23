@@ -56,7 +56,7 @@ export const ShopingCart = ({shopCart, handleOpenShopCart}) => {
 
                         {data?.map((product) => (
                             <div className="wrap-cart-item" key={product?.id}>
-                                <img src={`http://127.0.0.1:8000/storage/products/${product?.image ? product?.image : 'image.png'}`} alt="" />
+                                <img src={`http://127.0.0.1:8000/api/products/images/${product?.image ? product?.image : 'image.png'}`} alt="" />
                                 <div className="-cart-info">
                                     <p className="-cart-name">{product?.name}</p>
                                     <p className="-cart-info-item">Đơn giá: {product?.price.toLocaleString('vi-VN')} đ</p>

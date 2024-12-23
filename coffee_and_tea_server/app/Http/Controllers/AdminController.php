@@ -5,6 +5,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Models\Orders;
 use App\Models\Products;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -71,15 +72,16 @@ class AdminController extends Controller {
             $file_name = $admin->id . '_' . time() . '.' . $file->getClientOriginalExtension();
 
             // Tạo instance của Intervention Image
-            $storage_path = public_path('storage/admins');
+            $storage_path = storage_path('app/public/admins');
 
             if (!file_exists($storage_path)) {
                 mkdir($storage_path, 0777, true);
             }
-            if ($admin->image && file_exists(public_path('storage/admins/' . $admin->image))) {
-                unlink(public_path('storage/admins/' . $admin->image));
+            if ($admin->image && file_exists(storage_path('app/public/admins/' . $admin->image))) {
+                unlink(storage_path('app/public/admins/' . $admin->image));
             }
             $file->move($storage_path, $file_name);
+            Log::info($request->all());
 
             $admin->image = $file_name;
             $admin->save();

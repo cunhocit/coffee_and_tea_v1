@@ -66,7 +66,7 @@ export const ProductRelated = ({products}) => {
                 >
                     {products?.products?.map((product, index) => (
                         <SwiperSlide key={product.name} className="swiper-slide-directory" onClick={() => linkToProductDetails(product.id)}>
-                            <img src={`http://127.0.0.1:8000/storage/products/${product?.image ? product?.image : 'image.png'}`}  />
+                            <img src={`http://127.0.0.1:8000/api/products/images/${product?.image ? product?.image : 'image.png'}`}  />
                             <div><p>{product.name}</p></div>
                         </SwiperSlide>
                     ))}

@@ -41,7 +41,7 @@ export const SideBarUser = ({openSideBar, sideBarRef, customer, fetchData}) => {
     return (<>
         <div className={`-dashboard-sidebar ${openSideBar ? 'open' : ''}`} ref={sideBarRef}>
             <div className="-avatar-box">
-                <img src={`http://127.0.0.1:8000/storage/customers/${customer?.image ? customer?.image : 'image.png'}`} alt="" />
+                <img src={`http://127.0.0.1:8000/api/customers/images/${customer?.image ? customer?.image : 'image.png'}`} alt="" />
                 <div>
                     <p>{customer?.name}</p>
                     <input type="file" hidden ref={imageRef} onChange={handleFileChange}/>
@@ -57,7 +57,7 @@ export const SideBarUser = ({openSideBar, sideBarRef, customer, fetchData}) => {
                     <li><Link to={'/user'}><FontAwesomeIcon icon={faUser} />Thông tin</Link></li>
                     <li><Link to={'/user_orders'}><FontAwesomeIcon icon={faBoxOpen} />Đơn hàng</Link></li>
                     <li><Link to={'/user_change_password'}><FontAwesomeIcon icon={faKey} />Đổi mật khẩu</Link></li>
-                    <li><Link to={'/user_voucher'}><FontAwesomeIcon icon={faTag} />Mã giảm giá</Link></li>
+                    {/* <li><Link to={'/user_voucher'}><FontAwesomeIcon icon={faTag} />Mã giảm giá</Link></li> */}
                     <li><Link to={'/user_diposit'}><FontAwesomeIcon icon={faDollar} />Nạp tiền</Link></li>
                     <li onClick={() => handelLogout()}><FontAwesomeIcon icon={faSignOut} />Đăng xuất</li>
                 </ul>
