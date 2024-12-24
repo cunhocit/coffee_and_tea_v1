@@ -52,6 +52,8 @@ Route::middleware([CheckUser::class])->group(function () {
     Route::post('/update_customer', [CustomerController::class, 'updateCus']);
     Route::post('/update_image_customer', [CustomerController::class, 'updateAvatarCus']);
     Route::post('/change_password_customer', [CustomerController::class, 'changePasswordCustomer']);
+    
+    Route::post('/customer_logout', [AuthCustomerController::class, 'CustomerLogout']);
 
     Route::get('/get_all_prd', [ProductController::class, 'getAllPrd']);
     Route::post('/delete_prd', [ProductController::class, 'deletePrd']);

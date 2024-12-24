@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('quantity')->nullable();
             $table->integer('price')->nullable();
-            $table->double('discount_percentage')->unique()->nullable();
-            $table->string('end_date')->unique()->nullable();
+            $table->double('discount_percentage')->nullable();
+            $table->string('end_date')->nullable();
             $table->integer('turn_order')->nullable();
             $table->timestamps();
         });

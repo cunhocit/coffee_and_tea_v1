@@ -18,7 +18,7 @@ export const SlideShow = ({slideShowRef, nextSection}) => {
         <>
             <section className="wrap-slide-show" ref={slideShowRef}>
                 <div className="wrap-swiper">
-                    <h1>Khám phá hệ sinh thái dưới nước</h1>
+                    <h1>Một số sản phẩm</h1>
 
                     <Swiper effect={'coverflow'}
                             grabCursor={true}

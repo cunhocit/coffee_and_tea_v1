@@ -70,9 +70,10 @@
     }
 
     .-w-list-product-item {
-        border: 1px solid rgba(51, 49, 49, 0.096);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         width: 19% !important;
         height: 240px !important;
+        border-radius: 15px;
 
         @include respond(phone) {
             width: 32% !important;

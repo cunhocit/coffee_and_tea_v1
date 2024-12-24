@@ -120,6 +120,32 @@ export const updateAvatar = async (customer) => {
     }
 }
 
+export const Logout = async () => {
+    try {
+        const jwt_token = localStorage.getItem('jwt_token_customer')
+        if (jwt_token) {
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/customer_logout',{},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${jwt_token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    params: {id: encryptAES(localStorage.getItem('cus_id'))}
+                }
+            );
+    
+            if (response.status === 200) {
+               console.log(response.data.message);
+               localStorage.clear();
+               window.location.reload();
+            }
+        }
+    }catch(error) {
+        console.log(error?.response?.data?.message);
+        throw error;
+    }
+}
 
 // export const getInfoNavigation = async () => {
 //     try {

@@ -44,6 +44,10 @@ export const SaleLayout = () => {
     }
 
     const handleUpdateSale = async () => {
+        if (chooseSales.length === 0){
+            alert('Chưa có sản phẩm nào được chọn.')
+            return;
+        }
         if (validSale(chooseSales)) {
             await updateProductSale(chooseSales);
             window.location.reload();

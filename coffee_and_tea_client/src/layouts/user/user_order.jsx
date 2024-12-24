@@ -70,7 +70,7 @@ export const Orders = () => {
 
                                 {orderList?.map((order, index) => (
                                     <div className="-user-order-item" key={index}>
-                                        <div className="-img-container"><img src={`http://127.0.0.1:8000/storage/products/${
+                                        <div className="-img-container"><img src={`http://127.0.0.1:8000/api/products/images/${
                                             data?.products?.find(p => p.name === order.product).image
                                         }`} alt="" /></div>
                                         <div className="-order-item-info">

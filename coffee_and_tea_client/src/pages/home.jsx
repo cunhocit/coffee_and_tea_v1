@@ -24,11 +24,11 @@ export default function Home() {
 
     return (
         <HelmetProvider>
-            <Helmet> <title>Thế giới cá và thủy sinh</title> </Helmet>
+            <Helmet> <title>Coffee & Tea</title> </Helmet>
 
             <div className="wrap-contents">
 
-                <Header scrollToAbout={scrollToAbout}/>
+                <Header scrollToSlideShow={scrollToSlideShow}/>
 
                 {/* <AboutUs aboutRef={aboutRef} nextSection={scrollToSlideShow} /> */}
                 

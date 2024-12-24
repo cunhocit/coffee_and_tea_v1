@@ -4,18 +4,15 @@ import { faBoxOpen, faCoins, faDollar, faKey, faSignOut, faTag, faUser } from "@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
-import { updateAvatar } from "../../app/api/customer_api"
+import { Logout, updateAvatar } from "../../app/api/customer_api"
 
 export const SideBarUser = ({openSideBar, sideBarRef, customer, fetchData}) => {
     const imageRef = useRef(null);
 
     const handleClickFileDialog = () => imageRef.current.click();
 
-    const handelLogout = () => {
-        console.log('logout');
-        
-        localStorage.clear();
-        window.location.reload();
+    const handelLogout = async () => {
+        await Logout();
     }
 
     const handleFileChange = async (e) => {

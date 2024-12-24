@@ -71,11 +71,13 @@
                 @include flex-row-center-center;
 
                 img {
+                    border-radius: 10px;
                     width: 150px;
                     height: 150px;
                     object-fit: cover;
-                    border: 1px solid rgba(0, 0, 0, 0.619);
+                    border: 3px solid rgba(0, 0, 0, 0.8);
                     cursor: pointer;
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
                 }
 
                 .-cart-info {
@@ -104,11 +106,12 @@
                     div {
                         width: 100%;
                         padding: 0.2rem;
-                        border-radius: 2px;
+                        border-radius: 3px;
                         cursor: pointer;
-                        background-color: rgb(52, 163, 0);
+                        background-color: rgba(50, 50, 50, 0.937);
                         color: white;
                         text-align: center;
+                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
                     }
                     
                     p {
@@ -157,12 +160,11 @@
             text-align: center;
             padding: 0.5rem;
             border-radius: 5px;
-            background-color: green;
-            border: 2px solid green;
+            background-color: rgba(36, 37, 36, 0.926);
+            border: 2px solid rgb(251, 251, 251);
             transition: 0.5s;
         }
         a:hover {
-            color: yellow;
             font-weight: bold;
         }
     }

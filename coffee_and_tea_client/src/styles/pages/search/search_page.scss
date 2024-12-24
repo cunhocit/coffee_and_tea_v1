@@ -14,7 +14,7 @@
     cursor: grab;
     width: 50px;
     height: 50px;
-    background-color: green;
+    background-color: rgba(46, 48, 46, 0.871);
     border-radius: 100%;
     @include flex-row-center-center;
     transition: 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -23,6 +23,7 @@
     z-index: 9999999;
     top: 30%;
     right: 20%;
+    box-shadow: 0 10px 20px rgba(128, 128, 128, 0.2);
 
     svg {
         font-size: 0.8rem;
@@ -36,7 +37,7 @@
 }
 
 .cart-shopping-svg:hover {
-    color: green;
+    color: rgba(55, 56, 55, 0.91);
     font-weight: bold;
     svg {
         display: none;
@@ -44,7 +45,7 @@
 }
 
 .cart-shopping-svg:hover {
-    border: 2px solid green;
+    border: 2px solid rgba(48, 50, 48, 0.942);
     background-color: white;
 }
 

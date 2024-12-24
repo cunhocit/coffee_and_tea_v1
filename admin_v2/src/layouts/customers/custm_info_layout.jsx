@@ -181,8 +181,8 @@ export default function CustomerInfoLayout({id}) {
                   value={customer.status}
                   onChange={e => setCustomer({...customer, status: e.target.value})}
                 >
-                  <option value="1">Online</option>
-                  <option value="0">Offline</option>
+                  <option value="Online">Online</option>
+                  <option value="Offline">Offline</option>
                 </select>
               </label>
 

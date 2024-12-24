@@ -12,11 +12,10 @@ export default function Footer() {
                             <img className=" footer-item wrap-logo-footer" src="/image.png" alt="logo" />
                     
                             <ul className="footer-item">
-                                <li><h2>Cửa hàng</h2></li>
-                                <li><a href="#">Cá cảnh</a></li>
-                                <li><a href="#">Cây thủy sinh</a></li>
-                                <li><a href="#">Thức ăn cho cá</a></li>
-                                <li><a href="#">Khác</a></li>
+                                <li><h2>Liên kết</h2></li>
+                                <li><a href="/store">Cửa hàng</a></li>
+                                <li><a href="/user">Cá nhân</a></li>
+                                <li><a href="/contact">Liên hệ</a></li>
                             </ul>
 
                             <ul className="footer-item">
@@ -64,7 +63,7 @@ export default function Footer() {
                         </div>
 
                         <div className="wrap-copy-right">
-                            <p>&copy; 2024 Thế giới cá và thủy sinh | Thiết kế bởi ThanhLoi/Santo</p>
+                            <p>&copy; 2024 Coffee & Tea | Thiết kế bởi ThanhLoi</p>
                         </div>
                     </div>
                 </footer>

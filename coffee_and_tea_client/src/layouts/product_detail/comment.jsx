@@ -47,7 +47,7 @@ export const Comment = ({data2, id}) => {
                     <div className="-around-comment">
                         {comments?.map( c => (
                             <div className="-wrap-object-comment" key={c.id}>
-                                <img src={`http://127.0.0.1:8000/storage/customers/${customers?.find(p => p.id === c.cus_id)?.image ? customers?.find(p => p.id === c.cus_id)?.image : 'image.png'}`} alt="" />
+                                <img src={`http://127.0.0.1:8000/api/customers/images/${customers?.find(p => p.id === c.cus_id)?.image ? customers?.find(p => p.id === c.cus_id)?.image : 'image.png'}`} alt="" />
                                 <div>
                                     <h3>{customers?.find(p => p.id === c.cus_id).name}</h3>
                                     <p className="-time-comment">{new Date(c.created_at).toLocaleDateString()}</p>

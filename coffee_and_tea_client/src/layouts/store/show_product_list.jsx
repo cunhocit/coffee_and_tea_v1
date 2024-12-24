@@ -14,7 +14,7 @@ export const ShowProductList = ({data}) => {
     const [itemsPerPage, setItemsPerPage] = useState(15);
 
     useEffect(() => {
-        const sort_data = data?.products?.sort((a, b) => {
+            const sort_data = data?.products?.sort((a, b) => {
             const dateA = new Date(a.updated_at).getTime();
             const dateB = new Date(b.updated_at).getTime();
             return dateB - dateA;

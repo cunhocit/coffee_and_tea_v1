@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import NavigationBar from "../../components/navigation"
 
-export const Header = ({scrollToAbout}) => {
+export const Header = ({scrollToSlideShow}) => {
     return(
     <>
         <section className="wrap-header">
-            <NavigationBar scrollToAbout={scrollToAbout}/>
+            <NavigationBar/>
 
             <div className="header-contents">
                 <div className="contents-list">
@@ -16,7 +16,7 @@ export const Header = ({scrollToAbout}) => {
                             hành trình khám phá của bạn sẽ tràn đầy cảm hứng và hương vị tuyệt vời.
                     </p>
                 </div>
-                <a id="header-down-id" onClick={scrollToAbout}>Khám phá</a>
+                <a id="header-down-id" onClick={scrollToSlideShow}>Khám phá</a>
             </div>
 
             <video autoPlay loop muted playsInline className="header-bg-video">

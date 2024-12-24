@@ -107,8 +107,6 @@ class AuthCustomerController extends Controller
                 ];
                 $jwt_token = JWTAuth::fromUser($customer, $customeClaims);
 
-                Log::info('Customer ' . $customer->name . ' logged in');
-
                 // trả response json => client
                 return response()->json([
                     'message' => 'Đăng nhập thành công',
@@ -124,6 +122,37 @@ class AuthCustomerController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Đăng nhập thất bại, ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function CustomerLogout(Request $request) {
+        try {
+            $customer = Customers::where('id', CryptAES::decryptAES($request->input('id')))->first();
+
+            if (!$customer) {
+                return response()->json([
+                    'message' => 'Không tìm thấy khách hàng.'
+                ], 404);
+            }
+
+            $customer->status = 'Offline';
+            $customer->save();
+
+            $token = JWTAuth::getToken();
+            JWTAuth::invalidate($token);
+            return response()->json([
+                'message' => 'Đăng xuất thành công.'
+            ], 200);
+
+        }catch(\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json([
+                'message' => 'Token không hợp lệ'
+            ], 401);
+        }catch(\Exception $e) {
+            return response()->json([
+                'message' => 'Đăng xuất thất bại, có lỗi xảy ra! ' . $e->getMessage()
             ], 500);
         }
     }
